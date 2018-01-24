@@ -22,8 +22,8 @@ export default class Home extends Component {
   componentDidMount() {
     WebSocketService.subscribe(MATCH_STARTED, this.onMatchStart);
     WebSocketService.subscribe(MATCH_FINISHED, this.onMatchFinish);
-    Rest.get('players').then(players => this.setState({ players }));
-    this.getMostRecent();
+    // Rest.get('players').then(players => this.setState({ players }));
+    // this.getMostRecent();
   }
 
   componentWillReceiveProps({ updatableMatchIds }) {
@@ -68,16 +68,16 @@ export default class Home extends Component {
   };
 
   checkCanUpdate = (matchIds) => {
-    if (matchIds || this.state.matchInProgress) {
-      Rest.get(`matches/can-update-score/${this.props.device.id}`).then(canUpdateScore => {
-        let showNewPermission = matchIds && !this.state.canUpdateScore && canUpdateScore && this.props.postAlert;
-        this.setState({ canUpdateScore, matchInProgress: true }, () => {
-          if (showNewPermission) {
-            this.props.postAlert({ type: 'info', msg: NEW_MATCH_PERMISSION_GRANTED });
-          }
-        });
-      });
-    }
+    // if (matchIds || this.state.matchInProgress) {
+    //   Rest.get(`matches/can-update-score/${this.props.device.id}`).then(canUpdateScore => {
+    //     let showNewPermission = matchIds && !this.state.canUpdateScore && canUpdateScore && this.props.postAlert;
+    //     this.setState({ canUpdateScore, matchInProgress: true }, () => {
+    //       if (showNewPermission) {
+    //         this.props.postAlert({ type: 'info', msg: NEW_MATCH_PERMISSION_GRANTED });
+    //       }
+    //     });
+    //   });
+    // }
   };
 
   render() {
