@@ -109,7 +109,7 @@ export default class StartMatch extends Component {
   };
 
   beginMatch = () => {
-    let packet = Object.assign({ deviceId: this.props.device.id }, this.state);
+    let packet = Object.assign({}, this.state);
     Rest.post('matches/create', packet).then(({ match }) => {
       LocalStorageService.delete('start-match-state');
       let matchIds = LocalStorageService.get('match-ids');

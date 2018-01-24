@@ -8,18 +8,18 @@ const goToHomeScreen = (dismiss) => {
   dismiss();
 };
 
-const RenderAlertBody = (alert, device, dismiss) => {
+const RenderAlertBody = (alert, dismiss) => {
   switch (alert.type) {
     case Constants.MATCH_STARTED:
-      return NewMatchAlert(alert.msg, device, dismiss);
+      return NewMatchAlert(alert.msg, dismiss);
     default:
       return alert.msg;
   }
 };
 
-const NewMatchAlert = (match, device, dismiss) => {
+const NewMatchAlert = (match, dismiss) => {
   let clickOrTap = 'Click';
-  let type = device && device.type ? device.type : getBestGuessDevice();
+  let type = getBestGuessDevice();
   if (type === Constants.DEVICE_TYPES.MOBILE_DEVICE || type === Constants.DEVICE_TYPES.TABLET_DEVICE) {
     clickOrTap = 'Tap';
   }
@@ -28,7 +28,7 @@ const NewMatchAlert = (match, device, dismiss) => {
   );
 };
 
-const FixedAlerts = ({ alerts, device, dismiss }) => {
+const FixedAlerts = ({ alerts, dismiss }) => {
   return (
     <div class="fixed-alerts">
       <CSSTransitionGroup
@@ -43,7 +43,7 @@ const FixedAlerts = ({ alerts, device, dismiss }) => {
           alerts.map((al, i) => {
             return (
               <div key={al.id} class={`alert alert-${al.type}`}>
-                { RenderAlertBody(al, device, dismiss) }
+                { RenderAlertBody(al, dismiss) }
                 <button class="close-button" onClick={() => dismiss(i)}>&times;</button>
               </div>
             );

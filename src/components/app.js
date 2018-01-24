@@ -5,7 +5,6 @@ import Config from '../config';
 import Header from './header';
 import Home from '../routes/home';
 import Stats from '../routes/stats';
-import SetDevice from '../routes/setDevice';
 import DebugConsole from './debugConsole';
 import NotSoSecretCode from './notSoSecretCode';
 import GlobalKeyboardShortcuts from './globalKeyboardShortcuts';
@@ -26,8 +25,6 @@ export default class App extends Component {
       menu: false,
       kb: false,
       debugConsole: true,
-      device: null,
-      updatableMatchIds: null,
       alerts: []
     };
     let conf = this.ls.get('config');
@@ -38,16 +35,6 @@ export default class App extends Component {
 
     if (this.config.devMode) {
       this.canReset = false;
-    }
-
-    if (this.config.useGiphy) {
-      Rest.getExternal(`https://api.giphy.com/v1/gifs/search?api_key=${this.config.giphyAPIkey}&q=ping pong&limit=10&offset=${Math.random() * 200}&rating=PG-13&lang=en`)
-        .then(result => {
-          if (result && result.data) {
-            this.config.highlightImages.portrait = result.data.slice(0, 5).map(d => d.images.downsized_medium.url);
-            this.config.highlightImages.landscape = result.data.slice(5, 10).map(d => d.images.downsized_medium.url);
-          }
-        });
     }
   }
 
@@ -63,12 +50,14 @@ export default class App extends Component {
       document.body.style.setProperty('--secondaryBtnBorder', sbg ? lightenOrDarken(sbg, -40) : '#888');
     }
 
-    let device = this.ls.get('device');
-    if (device) {
-      this.setState({ device });
-      this.initWebSockets(device.id);
-    } else {
-      route('/set-device');
+    if (this.config && this.config.useGiphy) {
+      Rest.getExternal(`https://api.giphy.com/v1/gifs/search?api_key=${this.config.giphyAPIkey}&q=ping pong&limit=10&offset=${Math.random() * 200}&rating=PG-13&lang=en`)
+        .then(result => {
+          if (result && result.data) {
+            this.config.highlightImages.portrait = result.data.slice(0, 5).map(d => d.images.downsized_medium.url);
+            this.config.highlightImages.landscape = result.data.slice(5, 10).map(d => d.images.downsized_medium.url);
+          }
+        });
     }
   }
 
@@ -80,16 +69,6 @@ export default class App extends Component {
 	handleRoute = e => {
     this.currentUrl = e.url;
     this.menuToggledCallback(false);
-  };
-
-  onDeviceSet = device => {
-    let { alerts } = this.state;
-    alerts.push({ type: 'success', msg: `Registered ${device.name}!`});
-    this.setState({ device, alerts }, () => {
-      route('/');
-      this.initWebSockets(device.id);
-      setTimeout(() => this.setState({ alerts: [] }), 5000);
-    })
   };
 
 	menuToggledCallback = (menu) => {
@@ -142,25 +121,8 @@ export default class App extends Component {
     }
   };
 
-  onAddedDevicesToMatch = ({ match, deviceIds }) => {
-    if (this.state.device) {
-      let i = deviceIds.indexOf(this.state.device.id);
-      if (i !== -1) {
-        let matchIds = LocalStorageService.get('match-ids');
-        if (!matchIds || matchIds.length === 0) {
-          matchIds = [match.id];
-        } else {
-          matchIds.push(match.id);
-        }
-        LocalStorageService.set('match-ids', matchIds);
-        this.setState({ updatableMatchIds: matchIds });
-      }
-    }
-  };
-
-  initWebSockets = (deviceId) => {
-    WebSocketService.init(deviceId, this.config.devMode).then(() => {
-      WebSocketService.subscribe(Constants.ADDED_DEVICES_TO_MATCH, this.onAddedDevicesToMatch);
+  initWebSockets = () => {
+    WebSocketService.init(this.config.devMode).then(() => {
       WebSocketService.subscribe(Constants.MATCH_STARTED, this.onMatchStart);
     });
   };
@@ -185,7 +147,7 @@ export default class App extends Component {
   };
 
   testAlerts = () => {
-    this.postAlert({ type: 'success', msg: `This is a very long alert. You know, it's always a good idea to test things using absurdly long strings. Why, one time, my cousing who is a Software Developer failed to do so, and then he got fired when something looked like crap. So yeah, totally do that, bruh.`}, 999999999);
+    this.postAlert({ type: 'success', msg: `This is a very long alert. You know, it's always a good idea to test things using absurdly long strings. Why, one time, my cousing who is a Software eloper failed to do so, and then he got fired when something looked like crap. So yeah, totally do that, bruh.`}, 999999999);
     this.postAlert({ type: 'info', msg: 'Short one'}, 999999999);
     this.postAlert({ type: 'warning', msg: `Hey! cut that out. I'm watchin' you...`}, 999999999);
     this.postAlert({ type: 'error', msg: `Oh boy, now you've done it! What did I tell you, man???`}, 999999999);
@@ -201,9 +163,8 @@ export default class App extends Component {
 					showKeyboardShortcuts={() => this.showKeyboardShortcuts()}
 				/>
 				<Router onChange={this.handleRoute}>
-					<Home path="/" config={this.config} device={this.state.device} postAlert={this.postAlert} updatableMatchIds={this.state.updatableMatchIds} />
+					<Home path="/" config={this.config} postAlert={this.postAlert} updatableMatchIds={this.state.updatableMatchIds} />
           <Stats path="/stats" config={this.config} />
-          <SetDevice path="/set-device" config={this.config} callback={this.onDeviceSet} />
 				</Router>
         {/*
           (this.config.devMode && !this.state.debugConsole) ?
@@ -232,7 +193,7 @@ export default class App extends Component {
         <KeyboardShortcutHelp config={this.config} show={this.state.kb} dismiss={() => this.hideKeyboardShortcuts()} />
         <audio preload id="secret-sound" src="/assets/sounds/secret.wav" />
         <audio preload id="highlight-sound" src="/assets/sounds/secret.wav" />
-        <FixedAlerts alerts={this.state.alerts} device={this.state.device} dismiss={this.dismissAlert} />
+        <FixedAlerts alerts={this.state.alerts} dismiss={this.dismissAlert} />
 			</div>
 		);
 	}
