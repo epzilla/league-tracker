@@ -4,7 +4,6 @@ const players = require('./players');
 module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg) {
   // matches.init(models, sequelize, sendSocketMsg, registerForMsg);
   players.init(models);
-  devices.init(models);
 
   // Players
   app.get('/api/players', players.get);

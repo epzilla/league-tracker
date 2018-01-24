@@ -11,7 +11,7 @@ export default {
 
   upload: (url, data) => qwest.post(`${base}${url}`, data, { dataType: 'formdata', cache: true }).then(res => res.response),
 
-  del: (url, data) => return qwest.delete(`${base}${url}`, data, { dataType: 'formdata', cache: true }),
+  del: (url, data) => qwest.delete(`${base}${url}`, data, { dataType: 'formdata', cache: true }),
 
   getExternal: url => qwest.get(url, null, { responseType: 'json', cache: true }).then(res => res.response)
 };
