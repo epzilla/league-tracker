@@ -1,0 +1,83 @@
+.dismiss-btn, .delete-btn {
+  border: none;
+  background: transparent;
+  color: var(--colorDisabledText);
+  outline: none;
+  font-size: 1.5rem;
+  height: 30px;
+  width: 30px;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.dismiss-btn {
+  padding: 0;
+  font-size: 2.5rem;
+  position: absolute;
+  top: 1rem;
+  right: 0.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  background-color: white;
+  border: 1px solid var(--colorDisabledText);
+  color: #333;
+  padding: 0.625rem;
+  font-size: 1rem;
+  height: 2.5rem;
+  line-height: 1;
+  user-select: none;
+  border-radius: 0.1875rem;
+  text-decoration: none;
+  white-space: normal;
+
+  @media screen and (min-width: 400px) {
+    max-width: 50vw;
+  }
+
+  &.primary {
+    background-color: var(--primaryBtnBg);
+    border-color: var(--primaryBtnBorder);
+    color: var(--primaryBtnText);
+  }
+
+  &.secondary {
+    background-color: var(--secondaryBtnBg);
+    border-color: var(--secondaryBtnBorder);
+    color: var(--secondaryBtnText);
+  }
+
+  &.success {
+    background-color: #1b9a1b;
+    border-color: #147114;
+    color: white;
+    text-decoration: none;
+  }
+
+  &.big {
+    height: 55px;
+    font-size: 1.25rem;
+    padding: 12px;
+  }
+
+  &.success.big {
+    min-width: 100px;
+  }
+
+  &.update-score {
+    margin: 1rem auto;
+  }
+
+  .fa {
+    margin-right: 0.5rem;
+  }
+}

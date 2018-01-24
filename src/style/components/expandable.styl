@@ -1,0 +1,147 @@
+.expandable {
+  width: 100%;
+  margin: 0.5rem;
+  position: relative;
+
+  .hidden-checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+  }
+
+  .expandable-header {
+    height: 3rem;
+    margin: 0;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: var(--primary);
+    width: 100%;
+
+    &:before {
+      content: '-';
+      position: absolute;
+      left: 0.25rem;
+      top: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      width: 1.75rem;
+      height: 1.75rem;
+      border: 1px solid var(--primary);
+      border-radius: 1rem;
+      text-align: center;
+      line-height: 1.2;
+      cursor: pointer;
+    }
+
+    h3,
+    h3 label {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      flex-grow: 1;
+      margin: 0;
+      position: relative;
+      width: 100%;
+    }
+
+    h3 label {
+      cursor: pointer;
+      display: inline-block;
+      padding-left: 2rem;
+      line-height: 1.75;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+
+  .expandable-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .toggle-btn-label {
+    position: absolute;
+    top: 3rem;
+    z-index: 1;
+    background: white;
+  }
+
+  .hidden-checkbox:checked + .expandable-body {
+    transition: transform 0.3s ease, height 0.3s ease;
+    transform-origin: top;
+  }
+
+  .hidden-checkbox:not(:checked) + .expandable-body,
+  .hidden-checkbox:not(:checked) + .expandable-body + .toggle-btn-label {
+    transform: rotateX(90deg);
+    height: 0;
+  }
+
+  .hidden-checkbox:checked + .expandable-body {
+    transform: rotateX(0);
+    height: auto;
+  }
+
+  &.small {
+    .expandable-header {
+      height: 1.5rem;
+      max-width: 200px;
+      margin: 0 auto;
+
+      &:before {
+        left: 0.75rem;
+        top: 0.2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 1rem;
+        line-height: 0.9;
+      }
+
+      h3 {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      label {
+        padding-left: 2rem;
+      }
+    }
+
+    .hidden-checkbox:checked + .expandable-body + .toggle-btn-label:before {
+      left: 0.55rem;
+      top: -2.77rem;
+      font-size: 1rem;
+      font-weight: 500;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 1rem;
+      border: none;
+      line-height: 0.9;
+    }
+  }
+
+  &.centered {
+    text-align: center;
+
+    .hidden-checkbox:checked + .expandable-body + .toggle-btn-label:before {
+      left: -5.65rem;
+      top: -2.76rem;
+    }
+  }
+
+  &.collapsed {
+    .expandable-header:before {
+      content: '+';
+    }
+  }
+}

@@ -1,0 +1,128 @@
+.main.update-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > h2 {
+    margin: 1rem 0 0 0;
+  }
+
+  .expandable .expandable-body {
+    display: flex;
+  }
+
+  .match-update-info {
+    color: var(--colorLighterText);
+    font-style: italic;
+    margin: 0 0 0.5rem 0;
+  }
+}
+
+.games-list.select-list {
+  list-style-type: none;
+  margin: 0 0 2rem 0;
+  padding: 0;
+  width: 100vw;
+  max-width: 500px;
+
+  li {
+    height: auto;
+    width: auto;
+    flex: 1;
+
+    .expandable {
+      margin: 0;
+
+      .expandable-header {
+        background-color: var(--primary);
+        color: white;
+
+        &:before {
+          border: none;
+          content: '\f078';
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'FontAwesome';
+          font-size: 1rem;
+          font-weight: normal;
+        }
+      }
+
+      &.collapsed .expandable-header:before {
+        content: '\f054';
+        margin-top: 3px;
+      }
+    }
+
+    &.faux-expandable {
+      min-height: 2.5rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+      color: #1b9a1b;
+
+      span {
+        font-weight: 700;
+        font-size: 1.17rem;
+        font-family: var(--mainFont);
+      }
+
+      .fa {
+        font-size: 1.5rem;
+        margin: 1rem 1rem 1rem 0.5rem;
+      }
+    }
+  }
+}
+
+.game-update-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  justify-content: space-evenly;
+  margin-bottom: 1rem;
+  padding: 0 1.5rem;
+
+  h4 {
+    margin: 0.5rem 0;
+    max-width: 5rem;
+  }
+
+  .stepper-separator {
+    height: 9.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+  }
+
+  .vs-symbol {
+    color: var(--colorFaint);
+    border: 2px solid var(--colorFaint);
+    border-radius: 50%;
+    height: 1.75rem;
+    width: 1.75rem;
+  }
+}
+
+.final-score-toggle {
+  padding-bottom: 1rem;
+
+  label {
+    margin-right: 0.5rem;
+  }
+}
+
+.btn.change-device-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  margin-top: 2rem;
+
+  > span {
+    font-size: 1rem;
+  }
+}

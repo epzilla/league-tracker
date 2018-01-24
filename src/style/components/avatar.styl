@@ -1,0 +1,90 @@
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid var(--primary);
+  border-radius: 50%;
+  margin: 0 1rem;
+
+  &.medium {
+    height: 4rem;
+    width: 4rem;
+    margin: 0 2rem;
+  }
+
+  &.big {
+    height: 6rem;
+    width: 6rem;
+    margin: 0 2rem;
+  }
+
+  &.editable {
+    cursor: pointer;
+  }
+
+  &.can-drop {
+    box-shadow: 0px 0px 6px 6px #38ce64;
+  }
+
+  &.empty {
+    border: none;
+
+    .avatar-empty {
+      .fa {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .edit-overlay {
+    display: none;
+  }
+
+  .btn {
+    position: absolute;
+    bottom: 0;
+
+    &.save {
+      left: -1rem;
+    }
+
+    &.cancel {
+      right: -1rem;
+    }
+  }
+
+  &:hover .edit-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: var(--primary);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+
+    span {
+      text-align: center;
+    }
+  }
+
+  input {
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 500px) {
+  .avatar.big {
+    height: 4rem;
+    width: 4rem;
+    margin: 0 0.5rem;
+  }
+}

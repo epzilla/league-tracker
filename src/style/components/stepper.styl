@@ -1,0 +1,90 @@
+.stepper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+
+  .btn {
+    background-color: var(--primaryBtnBg);
+    color: var(--primaryBtnText);
+    font-weight: bold;
+    width: 5rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i.fa {
+      margin: 0 auto;
+    }
+  }
+
+  .top-btn {
+    order: 1;
+  }
+
+  .stepper-val {
+    order: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+    width: 5rem;
+
+    > span {
+      text-align: center;
+      font-size: 2em;
+    }
+  }
+
+  .bottom-btn {
+    order: 3;
+  }
+}
+
+.frac-stepper-label {
+  display: inline-flex;
+  position: absolute;
+  font-weight: bold;
+  height: 5em;
+  font-size: 2em;
+  padding-left: 0.5em;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-stepper {
+  margin-bottom: 1em;
+  h4 {
+    width: 5em;
+    text-align: center;
+  }
+  .btn-filter-stepper {
+    background: var(--primaryBtnBg);
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    color: white;
+    font-size: 32px;
+    padding: 0 9px;
+  }
+}
+
+@media(max-width: 750px) {
+  .filter-stepper {
+    .btn-filter-stepper {
+      width: 35px;
+      height: 35px;
+      border-radius: 3px;
+      font-size: 20px;
+    }
+  }
+}
+
+.stepper-with-label {
+  position: relative;
+  height: 10em;
+  display: flex;
+  align-items: center;
+}

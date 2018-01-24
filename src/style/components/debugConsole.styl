@@ -1,0 +1,101 @@
+.debug-mode-btn-container {
+  position: fixed;
+  font-size: 2rem;
+  bottom: 0.5rem;
+}
+
+.debug-btns-container {
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 3rem;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+  background-color: #999;
+  opacity: 0.5
+}
+
+.debug-btn {
+  opacity: 0.5;
+  font-size: 1.5rem;
+}
+
+.debug-mode-btn-container {
+  left: 0.5rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.console {
+  position: fixed;
+  bottom: 0;
+  top: 10vh;
+  left: 0;
+  right: 0;
+  background: white;
+  color: var(--color-default-text);
+  box-shadow: var(--subtle-shadow-up);
+  z-index: 6;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .console-header {
+    background: #D7D7D7;
+    color: var(--color-default-text);
+    height: 1.5rem;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .close-button {
+      background: transparent;
+      border: none;
+      color: black;
+      cursor: pointer;
+      right: 0;
+      top: 0;
+      position: absolute;
+      height: 1rem;
+      width: 1rem;
+      font-size: 1rem;
+    }
+  }
+
+  .console-logs {
+    height: calc(100% - 1.5rem);
+    margin-top: 1.5rem;
+    padding: 0.5rem;
+    position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .console-log {
+
+    .fa {
+      margin-right: 1rem;
+    }
+
+    &.console-log-info {
+      color: cornflowerblue;
+    }
+
+    &.console-log-error {
+      color: indianred;
+    }
+
+    &.console-log-warn {
+      color: gold;
+    }
+
+    &.console-log-debug {
+      color: mediumpurple;
+    }
+  }
+}

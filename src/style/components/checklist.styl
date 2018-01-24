@@ -1,0 +1,123 @@
+.checklist {
+  position: relative;
+  z-index: 1;
+  text-align: left;
+  padding: 0;
+
+  .set {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .set-header {
+      margin: 1rem 0 0;
+      text-align: center;
+    }
+
+    > .lists {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+      flex-grow: 1;
+      margin: 1rem 0;
+
+      @media (min-width: 800px) {
+        max-width: 70%;
+      }
+    }
+  }
+
+  ul.group {
+    padding: 0;
+    list-style-type: none;
+    margin: 0.5rem;
+  }
+
+  li.item {
+    list-style-type: none;
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    padding: 0;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    z-index: 1;
+
+    label {
+      background: white;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 0.5rem;
+      position: relative;
+      line-height: 1;
+
+      .team-logo {
+        margin-right: 0.5rem;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    input[type=checkbox]:checked:before {
+      content: "\2713";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      font-weight: bolder;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    input[type=checkbox]:checked + label {
+      background-color: #CADFF2;
+
+      &:after {
+        content: "\2713";
+        background-color: #CADFF2;
+        position: absolute;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 1rem;
+        padding-right: 0.5rem;
+        font-weight: bolder;
+        z-index: 1;
+      }
+    }
+
+    input[type=checkbox] {
+      width: 0;
+      height: 0;
+      position: absolute;
+      visibility: hidden;
+    }
+  }
+
+  li.header.item {
+    padding: 1rem;
+    background: var(--primary);
+    border: 1px solid black;
+    color: var(--secondary);
+    cursor: pointer;
+
+    p {
+      margin: 0;
+      color: var(--secondary);
+      font-weight: bolder;
+    }
+  }
+}

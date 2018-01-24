@@ -1,0 +1,283 @@
+@import 'animations';
+
+.big-box-score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 1.25rem;
+  font-family: 'Montserrat', var(--mainFont);
+  position: fixed;
+  border: 3px solid #EFEFEF;
+  border-top: none;
+  top: 50px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2 ;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .back-button {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: 1rem;
+    left: 0.5rem;
+    background-color: transparent;
+    border-radius: 25px;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    line-height: 0;
+    z-index: 3;
+    font-size: 1rem;
+    padding: 0;
+
+    &.dark {
+      border-color: var(--colorDefaultText);
+      color: var(--colorDefaultText);
+    }
+  }
+
+  .date-span {
+    position: absolute;
+    left: 1rem;
+  }
+
+  .team-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    height: 100%;
+    width: 50%;
+    padding: 0 2rem;
+    position: relative;
+
+    * {
+      color: white;
+      user-select: none;
+    }
+
+    .team-name,
+    .score-line {
+      text-transform: uppercase;
+      font-size: 3rem;
+      font-weight: 700;
+      text-shadow: 2px 2px  rgba(0, 0, 0, 0.7);
+
+      @media screen and (max-width: 1000px) {
+        font-size: 2.5rem;
+      }
+
+      @media screen and (max-width: 800px) {
+        font-size: 2rem;
+      }
+    }
+
+    .team-name {
+      margin-top: 30vh;
+      min-height: 3rem;
+      text-align: center;
+      z-index: 1;
+
+      &.smaller {
+        font-size: 2rem;
+      }
+
+      @media screen and (max-width: 750px) {
+        text-align: left;
+      }
+    }
+
+    .score-line {
+      border-radius: 50%;
+      box-shadow: 0 0 15vw 10vw rgba(0, 0, 0, 0.3), inset 0 0 0 2rem rgba(0, 0, 0, 0.3);
+      font-size: 7rem;
+    }
+
+    .overlay,
+    .team-img,
+    .team-bg {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: auto 25vw;
+    }
+
+    .team-img {
+      opacity: 0.33;
+    }
+
+    .overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+  }
+
+  .separator-left,
+  .separator-right {
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: calc(100vh - 50px) 5vw 0 0;
+    position: absolute;
+    left: calc(50% - 2.5rem);
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+  }
+
+  .separator-right {
+    border-width: 0 0 calc(100vh - 50px) 5vw;
+  }
+
+  .team-badge {
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 1rem;
+  }
+
+  @media screen and (max-width: 850px) {
+    .separator-left,
+    .separator-right {
+      left: calc(50% - 1rem);
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+
+    .team-block {
+      height: 50%;
+      width: 100%;
+
+      .team-img {
+        opacity: 0.2;
+        width: 50%;
+      }
+
+      .overlay {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 2rem;
+        z-index: 2;
+
+        .team-name {
+          margin-top: 0;
+        }
+
+        .score-line {
+          box-shadow: none;
+          margin-left: auto;
+        }
+      }
+    }
+
+    .separator-right,
+    .separator-left {
+      display: none;
+    }
+  }
+
+  .team-name {
+    display: none;
+
+    &.light {
+      text-shadow: 2px 2px  rgba(204, 204, 204, 0.7);
+    }
+
+    &.team-name-smaller {
+      display: inline;
+
+      &.small-text {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+      }
+    }
+
+    @media screen and (min-width: 750px) {
+      &.team-name-smaller {
+        display: none;
+      }
+
+      &.team-name-small {
+        display: inline;
+      }
+    }
+
+    @media screen and (min-width: 950px) {
+      &.team-name-small {
+        display: none;
+      }
+
+      &.team-name-full {
+        display: inline;
+      }
+    }
+
+    .score-line {
+      flex-shrink: 0;
+
+      * {
+        margin: 0 0.5rem;
+      }
+    }
+
+    @media screen and (max-width: 450px) {
+      .team-name,
+      .score-line {
+        font-size: 14px;
+      }
+
+      .team-badge {
+        margin: 1rem 0.25rem;
+      }
+
+      .team-name {
+        margin-right: 0.25rem;
+      }
+    }
+
+    @media screen and (max-width: 350px) {
+      .team-name,
+      .score-line {
+        font-size: 14px;
+      }
+
+      .team-badge {
+        margin: 1rem 0.25rem;
+      }
+
+      .score-line * {
+        margin: 0 0.25rem;
+      }
+
+      .team-name {
+        margin-right: 0.25rem;
+      }
+    }
+  }
+}
+
+.scale-in-enter.big-box-score {
+  animation: flip-in 300ms linear;
+}
+
+.scale-in-leave.big-box-score {
+  animation: flip-out 300ms linear;
+}

@@ -1,0 +1,182 @@
+.touchpad {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--colorDisabledText);
+  z-index: 8;
+  transform: translateY(100vh);
+  transition: transform 0.05s ease-in-out;
+
+  &.show {
+    transform: translateY(0vh);
+
+    &:not(.is-swiping) {
+      transition: transform 1s ease-in-out;
+    }
+  }
+
+  .touch-hint {
+    color: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.05);
+    position: absolute;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    top: -1.5rem;
+    left: 45%;
+    right: 45%;
+    height: 1.5rem;
+    width: 3rem;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    text-align: center;
+    font-size: 3rem;
+
+    &:before {
+      content: '\203A';
+      transform: rotate(-90deg) translateY(-5px);
+    }
+
+    &.flip {
+      color: rgba(255, 255, 255, 0.2);
+      display: flex;
+      background: rgba(0, 0, 0, 0.2);
+      transform: translateY(1.5rem) rotate(180deg);
+    }
+  }
+
+  .emoji-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    flex-shrink: 1;
+    font-size: 3rem;
+    line-height: 0;
+    max-height: 30vh;
+  }
+
+  .touch-controller {
+    flex-grow: 2;
+    height: 400px;
+    max-height: 50vh;
+    margin: 1rem;
+    // padding: 1rem;
+
+    * {
+      flex-grow: 1;
+    }
+  }
+
+  @media (orientation: landscape) {
+    justify-content: center;
+
+    .emoji-hint {
+      height: 25vh;
+    }
+
+    .touch-controller {
+      height: auto;
+      width: 100%;
+    }
+  }
+
+  .d-pad-button, .b-a-button {
+    &:active,
+    &:focus {
+      box-shadow: 0px 0px 16px 30px #ea0e0e;
+    }
+
+    &.correct-btn:active,
+    &.correct-btn:focus {
+      box-shadow: 0px 0px 16px 30px #00982d;
+    }
+  }
+
+  .d-pad {
+    flex-direction: column;
+    flex-grow: 0;
+    margin: 2rem;
+  }
+
+  .d-pad-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    height: 40px;
+    width: 40px;
+    flex-grow: 0;
+    position: relative;
+    color: rgba(177, 177, 177, 0.3);
+    font-size: 2rem;
+    background-color: #333;
+    border: 1px solid #333;
+
+    span {
+      text-align: center;
+    }
+
+    &.up-button {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    &.down-button {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
+    &.left-button {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+
+    &.right-button {
+      border-bottom-right-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    &.center-button {
+      border-top-right-radius: unset;
+      border-top-left-radius: unset;
+      &:before {
+      content: '';
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      border: 2px solid rgba(177, 177, 177, 0.3);
+      top: 0.3rem;
+      left: 0.3rem;
+      }
+    }
+  }
+
+  .b-a-buttons {
+    align-items: center;
+    flex-grow: 0;
+    padding-top: 1rem;
+
+    .flex-col:last-of-type {
+      margin: 1rem;
+    }
+
+    label {
+      font-family: 'Press Start 2P', var(--mainFont);
+      margin-top: 0.25rem;
+    }
+  }
+
+  .b-a-button {
+    background-color: red;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    flex-grow: 0;
+  }
+}

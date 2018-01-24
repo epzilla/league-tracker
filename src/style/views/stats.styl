@@ -1,0 +1,122 @@
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .top-block {
+    background: white;
+    text-align: center;
+    width: 100%;
+    transform: translateZ(1px);
+    z-index: 1;
+  }
+
+  .more-options {
+    margin: 1rem 0;
+  }
+
+  .criteria-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      .toggle {
+        margin-right: 0.5rem;
+
+        label {
+          margin-bottom: 0;
+        }
+      }
+
+      label {
+        margin-bottom: 0;
+        height: auto;
+
+        &.disabled {
+          opacity: 0.5;
+        }
+
+        input {
+          border: none;
+          max-width: 45px;
+          padding: 0 0 0 10px;
+        }
+      }
+    }
+  }
+}
+
+.record {
+  color: var(--primary);
+}
+
+.yearly {
+  .record-stat {
+    margin: 0.5rem 0;
+    font-family: var(--blockFont);
+  }
+}
+
+hr {
+  margin: 1rem 0;
+}
+
+.submitted {
+  h2, h3 {
+    text-align: center;
+  }
+
+  .hide-submitted {
+    display: none;
+  }
+}
+
+.slide-up-half-enter {
+  transform: translateY(50%);
+  opacity: 0.1;
+}
+
+.slide-up-half-appear.slide-up-half-appear-active, .slide-up-half-enter.slide-up-half-enter-active {
+  transform: translateY(0);
+  opacity 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.slide-up-half-leave {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-up-half-leave.slide-up-half-leave-active {
+  transform: translateY(50%);
+  opacity: 0.01;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal.select-teams {
+  position: absolute;
+  display: flex;
+  flex-grow: 1;
+  bottom: 2rem;
+  top: calc(56px + 2rem);
+  left: 2rem;
+  right: 2rem;
+  border-radius: 4px;
+
+  .modal-body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    border-top: 1px solid var(--primary);
+  }
+
+  .modal-footer {
+    height: 4rem;
+    width: 100%;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    border-top: 1px solid var(--primary);
+  }
+}

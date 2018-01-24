@@ -1,0 +1,201 @@
+@import 'animations';
+
+.scoreboard {
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: white;
+  border: 3px solid #AAA;
+  border-radius: 5px;
+  min-width: 40vw;
+  max-width: calc(100vw - 1rem);
+
+  h3 {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 700px) {
+    min-width: 65vw;
+  }
+}
+
+.player-name,
+.score-number-box {
+  padding: 0.25rem;
+
+  @media screen and (max-width: 400px) {
+    padding: 0.25rem 0;
+  }
+
+  @media screen and (min-width: 550px) {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+  }
+
+  @media screen and (min-width: 700px) {
+    font-size: 1.75rem;
+    padding: 1rem;
+  }
+
+  @media screen and (min-width: 1000px) {
+    font-size: 3rem;
+    padding: 1rem;
+  }
+}
+
+.player-name {
+  flex: 1;
+}
+
+.player-name.winner {
+  position: relative;
+  font-weight: 700;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: -0.66rem;
+    top: 0.55em;
+    border-top: 0.4em solid transparent;
+    border-bottom: 0.4em solid transparent;
+    border-left: 0.4em solid var(--colorDefaultText);
+    border-right: 0.4em solid transparent;
+
+    @media screen and (min-width: 700px) {
+      top: 0.8em;
+      left: -0.2em;
+    }
+
+    @media screen and (min-width: 1000px) {
+      left: -0.66rem;
+      top: 0.55em;
+    }
+  }
+}
+
+.score-number-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.25rem;
+  padding: 0.25rem 0;
+  width: 2rem;
+
+  &.win {
+    font-weight: 900;
+  }
+
+  &.loss {
+    color: var(--colorMediumText);
+  }
+
+  &.future {
+    color: var(--colorMediumText);
+    opacity: 0.5;
+  }
+
+  &.flash {
+    background-color: var(--scoreFlashColor);
+    font-weight: 700;
+  }
+
+  &.game-flash {
+    background-color: var(--scoreFlashColor);
+    position: relative;
+
+    &:after {
+      position: absolute;
+      animation: flash 1s ease-in-out infinite;
+      content: '';
+      position: absolute;
+      width: 2.1em;
+      height: 5.5em;
+      top: 0;
+      left: 0;
+      background-color: var(--scoreFlashColor);
+
+      @media screen and (min-width: 550px) {
+        left: -0.15em;
+      }
+
+      @media screen and (min-width: 700px) {
+        height: 6.25em;
+        left: 0;
+        width: 2.3em;
+      }
+
+      @media screen and (min-width: 1000px) {
+        height: 5em;
+        left: -0.1em;
+        width: 1.5em;
+      }
+    }
+  }
+
+  @media screen and (min-width: 550px) {
+    margin: 0 1rem;
+    width: 2.75rem;
+  }
+
+  @media screen and (min-width: 700px) {
+    width: 4rem;
+  }
+}
+
+.header-row {
+  font-weight: 600;
+
+  .score-number-box {
+    border-bottom: 1px solid var(--primaryBtnBg);
+
+    &.current {
+      background-image: linear-gradient(#fff, #eee)
+      font-weight: 900;
+      border-bottom-width: 3px;
+    }
+  }
+}
+
+.stats-row {
+  margin-top: 0.5rem;
+
+  .final,
+  .match-info-block {
+    margin: 0;
+  }
+
+  .final {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .match-info-block {
+    color: #AAA;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+
+    &.align-top {
+      align-items: flex-start;
+
+      .fa {
+        margin-top: 2px;
+      }
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.date-time-header {
+  margin: 0 0 0.5rem 0;
+  font-style: italic;
+  color: #AAA;
+  text-decoration: underline;
+  text-align: center;
+}
+
+.scoreboard.box-score {
+  margin-bottom: 2rem;
+}

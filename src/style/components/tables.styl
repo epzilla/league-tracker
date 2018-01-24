@@ -1,0 +1,162 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 auto 2rem auto;
+
+  &.capped-size-table {
+    max-width: 1080px;
+  }
+
+  tr {
+    &:hover {
+      background-color: rgb(245, 245, 245);
+    }
+
+    &.win * {
+      color: var(--primary);
+    }
+
+    &.loss * {
+      color: var(--tertiary);
+    }
+
+    &.tie * {
+      color: #AAA;
+    }
+  }
+
+  td,
+  th {
+    padding: 0.5rem;
+    border-bottom: 1px solid #DDD;
+    text-align: left;
+
+    &.center {
+      text-align: center;
+    }
+
+    .smaller,
+    .smallest,
+    &.smallest,
+    &.smaller {
+      display: none;
+    }
+
+    &.tie {
+      color: var(--colorDisabledText);
+    }
+
+    &.one-third {
+      width: 33.333%
+    }
+
+    &.two-thirds {
+      width: 66.667%
+    }
+  }
+
+  td {
+    color: var(--primary);
+  }
+
+  th {
+    color: var(--tertiary);
+    cursor: pointer;
+  }
+}
+
+table.table-condensed {
+  td,
+  th {
+    padding: 0.25rem;
+  }
+}
+
+table.editable-table {
+  > tbody > tr {
+    &:hover {
+      background-color: white;
+    }
+
+    > td {
+      padding: 0;
+      height: 40px;
+      > input {
+        border: none;
+        height: 100%;
+        padding: 0 0.5rem;
+
+        &[type=number] {
+          max-width: 4rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  table > tbody > tr > td,
+  table > thead > th {
+    .smaller {
+      display: inline;
+    }
+
+    &.smaller {
+      display: table-cell;
+    }
+
+    .larger,
+    &.larger {
+      display: none;
+    }
+  }
+}
+
+@media (orientation: portrait) and (max-width: 650px) {
+  table > tbody > tr > td,
+  table > thead > th {
+    .smallest {
+      display: inline;
+    }
+
+    &.smallest {
+      display: table-cell;
+    }
+
+    .smaller,
+    .larger,
+    &.smaller,
+    &.larger {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: 1080px) {
+  table {
+    td,
+    th,
+    td .btn {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  table {
+    td,
+    th {
+      padding: 0.25rem;
+      font-size: 14px;
+
+      .btn {
+        // max-width: 40px;
+        // max-height: 25px;
+      }
+    }
+
+    th {
+      font-size: 11px;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+node_modules
+tmp
+src/style/font-awesome-4.7.0/scss
+src/style/font-awesome-4.7.0/less
+build
+*.log

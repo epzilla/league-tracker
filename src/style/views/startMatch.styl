@@ -1,0 +1,132 @@
+.main.new-match {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  hr {
+    width: 400px;
+    max-width: 95%;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+  }
+
+  .btn {
+    min-height: 50px;
+    font-size: 1.2rem;
+
+    &.big.begin-match-btn {
+      font-size: 1.35rem;
+      height: 60px;
+      min-width: 300px;
+    }
+  }
+
+  .doubles-switch {
+    margin-bottom: 1rem;
+  }
+
+  .team-select-block .btn {
+    min-height: unset;
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .match-settings {
+    .label {
+      font-size: 1.35rem;
+      max-width: calc(100vw - 2rem);
+
+      &:first-of-type {
+        text-align: right;
+      }
+    }
+
+    .controls-col {
+      .label {
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+
+      input {
+        margin-top: 0.5rem;
+        font-size: 1.5rem;
+        height: 3rem;
+        width: 5rem;
+        padding: 0.5rem;
+      }
+    }
+  }
+}
+
+.team-select-block {
+  display: flex;
+  flex-direction: column;
+
+  .avatar {
+    margin: 0 0.5rem 0 1.5rem;
+  }
+}
+
+.player-selected-block,
+.versus-separator {
+  margin-bottom: 1rem;
+}
+
+.player-selection-area {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.player-selected-block {
+  display: flex;
+  align-items: center;
+
+  > h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  &.empty {
+    border: 1px dashed #AAA;
+    cursor: pointer;
+    opacity: 0.5;
+  }
+}
+
+.player-name-wrap {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.and-separator,
+.versus-separator {
+  font-size: 1.5rem;
+}
+
+.and-separator {
+  margin-bottom: 1rem;
+}
+
+.versus-separator {
+  margin-bottom: 0;
+  position: relative;
+
+  &:before,
+  &:after {
+    content: '';
+    width: 5rem;
+    position: absolute;
+    top: 1.25rem;
+    border: 1px solid #EEE;
+  }
+
+  &:before {
+    left: -6rem;
+  }
+
+  &:after {
+    left: 2.75rem;
+  }
+}
