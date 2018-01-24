@@ -1,7 +1,7 @@
 {
-  "name": "pong-db",
+  "name": "league-tracker",
   "version": "1.0.0",
-  "description": "ping pong score tracker and stats database",
+  "description": "Sports league management, score-tracking, and stats application",
   "main": "index.js",
   "scripts": {
     "frontend": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",

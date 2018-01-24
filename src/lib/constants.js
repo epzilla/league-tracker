@@ -10,7 +10,7 @@ export const DEVICE_CANNOT_UPDATE_MATCH = 'This device is not authorized to upda
 export const NO_DEVICES_SELECTED_ERROR = 'No devices selected.';
 export const NEW_MATCH_PERMISSION_GRANTED = 'You have been granted permission to update a match!';
 export const SET_DEVICE_NAME_PROMPT = `
-  It doesn't look like you've used Pong Tracker on this device before.
+  It doesn't look like you've used League Tracker on this device before.
   Please take a moment to give this device a name, so that you can
   use it to update scores.
 `;

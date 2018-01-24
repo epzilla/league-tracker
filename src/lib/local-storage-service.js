@@ -1,5 +1,5 @@
 export default {
-  'prefix': 'pong-db',
+  'prefix': 'leag-tracker',
 
   get: function (key) {
     let prefixedKey, self;
