@@ -1,18 +1,28 @@
 const players = require('./players');
-// const matches = require('./matches');
+const matches = require('./matches');
+const divisionStandings = require('./divisionStandings');
+const leagues = require('./leagues');
+const users = require('./users');
 
 module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg) {
-  // matches.init(models, sequelize, sendSocketMsg, registerForMsg);
+  matches.init(models, sequelize, sendSocketMsg, registerForMsg);
   players.init(models);
+  leagues.init(models);
+  divisionStandings.init(models);
 
   // Players
   app.get('/api/players', players.get);
   app.post('/api/players', players.create);
 
   // Matches/Games
+  app.get('/api/matches/:leagueId/recent', matches.recent);
+  app.get('/api/matches/:leagueId/live', matches.live);
+  app.get('/api/standings/:leagueId', divisionStandings.get);
+  app.get('/api/leagues/:leagueId', leagues.get);
+  app.get('/api/users/:userId', users.get);
+  app.get('/api/users/:userId/leagues', users.getLeaguesForUser);
+
   // app.get('/api/matches/by-players/:player1Id/:player2Id', matches.matchesByPlayers);
-  // app.get('/api/matches/most-recent/:count', matches.mostRecent);
-  // app.get('/api/matches/current', matches.current);
   // app.get('/api/matches/can-update-score/:deviceId', matches.canUpdate);
   // app.get('/api/matches/:id', matches.findById);
   // app.post('/api/matches/create', matches.create);

@@ -3,6 +3,7 @@ import { route, Router } from 'preact-router';
 
 import Config from '../config';
 import Header from './header';
+import LeagueHome from '../routes/leagueHome';
 import Home from '../routes/home';
 import Stats from '../routes/stats';
 import DebugConsole from './debugConsole';
@@ -24,6 +25,7 @@ export default class App extends Component {
     this.state = {
       menu: false,
       kb: false,
+      user: {"id":72,"fname":"Clare","lname":"Dayer","email":"cdayer1z@addtoany.com","mi":"T","avatar":"https://robohash.org/dictaomnisut.jpg?size=50x50&set=set1","phone":"584-260-0793","altPhone":"784-772-4205"},
       debugConsole: true,
       alerts: []
     };
@@ -163,7 +165,8 @@ export default class App extends Component {
 					showKeyboardShortcuts={() => this.showKeyboardShortcuts()}
 				/>
 				<Router onChange={this.handleRoute}>
-					<Home path="/" config={this.config} postAlert={this.postAlert} updatableMatchIds={this.state.updatableMatchIds} />
+					<LeagueHome path="/leagues/:leagueId" config={this.config} postAlert={this.postAlert} />
+          <Home path="/" config={this.config} postAlert={this.postAlert} user={this.state.user} />
           <Stats path="/stats" config={this.config} />
 				</Router>
         {/*

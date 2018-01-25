@@ -47,19 +47,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     leagueIds: {
       field: 'league_ids',
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
       defaultValue: undefined
     },
     sportIds: {
       field: 'sport_ids',
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
       defaultValue: undefined
     },
     teamIds: {
       field: 'team_ids',
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
       defaultValue: undefined
     },

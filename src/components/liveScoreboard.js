@@ -77,6 +77,6 @@ export default class LiveScoreboard extends Component {
   };
 
   render() {
-    return <BoxScore jumbotron={true} {...this.state} />
+    return <BoxScore jumbotron={true} sport={this.props.sport} {...this.state} />
   }
 }

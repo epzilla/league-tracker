@@ -13,7 +13,7 @@ let socketCallbacks = {};
 // Define your models
 const database = new Sequelize(null, null, null, {
   dialect: 'sqlite',
-  storage: './data/sport.db',
+  storage: './data/leaguetracker.db',
   logging: false
 });
 
