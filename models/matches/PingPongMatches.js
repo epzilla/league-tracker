@@ -49,25 +49,41 @@ module.exports = function(sequelize, DataTypes) {
       field: 'player1_id',
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: undefined
+      defaultValue: undefined,
+      references: {
+        model: 'players',
+        key: 'id'
+      }
     },
     player2Id: {
       field: 'player2_id',
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: undefined
+      defaultValue: undefined,
+      references: {
+        model: 'players',
+        key: 'id'
+      }
     },
     partner1Id: {
       field: 'partner1_id',
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: undefined
+      defaultValue: undefined,
+      references: {
+        model: 'players',
+        key: 'id'
+      }
     },
     partner2Id: {
       field: 'partner2_id',
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: undefined
+      defaultValue: undefined,
+      references: {
+        model: 'players',
+        key: 'id'
+      }
     },
     finished: {
       field: 'finished',

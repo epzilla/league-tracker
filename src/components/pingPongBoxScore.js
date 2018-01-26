@@ -1,25 +1,9 @@
-import { getFormattedMatchDate, getStatsForMatch, getMatchTimeAgo, getTeamName } from '../lib/helpers';
-
-const calculateExpectedPointsPerMatch = (match) => {
-  let expectedPerGame;
-
-  let finishedGames = match.games.filter(g => g.gameFinished);
-  if (finishedGames.length > 0) {
-    expectedPerGame = finishedGames.reduce((sum, current) => sum + (current.score1 + current.score2), 0) / finishedGames.length;
-  } else {
-    expectedPerGame = (match.playTo * 1.75);
-  }
-
-  if (match.playAllGames) {
-    return expectedPerGame * match.bestOf;
-  }
-
-  return expectedPerGame * Math.ceil((match.bestOf + Math.ceil(match.bestOf / 2)) / 2);
-};
+import { getFormattedMatchDate, getMatchTimeAgo } from '../lib/helpers';
+import { calculateExpectedPointsPerMatch, getStatsForMatch, getTeamName } from '../lib/pingPongHelpers';
 
 const getHourGlassIcon = (match, currentGame) => {
   let game = match.games[currentGame];
-  let previousPoints = match.games.filter(g => g.gameFinished).reduce((sum, current) => sum + (current.score1 + current.score2), 0) || 0;
+  let previousPoints = match.games.filter(g => g.finished).reduce((sum, current) => sum + (current.score1 + current.score2), 0) || 0;
   let totalPoints = previousPoints + (game ? (game.score1 + game.score2) : 0);
   let expectedTotalPoints = calculateExpectedPointsPerMatch(match);
   let pct = totalPoints / expectedTotalPoints;
@@ -33,7 +17,7 @@ const getHourGlassIcon = (match, currentGame) => {
 };
 
 const getScoreToDisplay = (match, game, teamNum) => {
-  if (match.updateEveryPoint || game.gameFinished) {
+  if (match.updateEveryPoint || game.finished) {
     return game[`score${teamNum}`];
   }
 
@@ -54,10 +38,10 @@ const shouldFlashScore = (scoreFlash, game, i, teamNum) => {
 };
 
 const getClassesForGameBox = (match, i, gameFlash) => {
-  // `score-number-box ${match.games[i].gameFinished ? 'finished' : 'current'}`
+  // `score-number-box ${match.games[i].finished ? 'finished' : 'current'}`
   let g = match.games[i];
   let classes = 'score-number-box';
-  if (g.gameFinished) {
+  if (g.finished) {
     classes += ' finished';
   } else {
     classes += ' current';
@@ -73,7 +57,7 @@ const getClassesForGameBox = (match, i, gameFlash) => {
 const getClassesForScoreBox = (match, i, scoreFlash, teamNum) => {
   let g = match.games[i];
   let classes = 'score-number-box';
-  if (g.gameFinished) {
+  if (g.finished) {
     if ((g.score1 > g.score2 && teamNum === 1) || (g.score2 > g.score1 && teamNum === 2)) {
       classes += ' win';
     } else {
@@ -104,7 +88,7 @@ const PingPongBoxScore = ({ match, jumbotron, scoreFlash, gameFlash, matchFlash 
   for (let i = 0; i < numCols; i++) {
     headerRowNums.push(i);
     let game = match.games[i];
-    if (game && !game.gameFinished) {
+    if (game && !game.finished) {
       currentGame = i;
     }
   }

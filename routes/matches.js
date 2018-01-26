@@ -2,6 +2,8 @@ const crypto = require('crypto');
 const constants = require('../constants');
 let Sports;
 let Players;
+let Persons;
+let Coaches;
 let TennisMatches;
 let FootballMatches;
 let BaseballMatches;
@@ -10,25 +12,45 @@ let SoccerMatches;
 let HockeyMatches;
 let FoosballMatches;
 let PingPongMatches;
+let PingPongGames;
 let sequelize;
 let sendSocketMsg;
 
-const getSportModel = (id) => {
+const getSportMatchModel = (id) => {
   return Sports.findById(id).then(sport => {
     switch (sport.name) {
       case 'Ping Pong':
       case 'Table Tennis':
-        return PingPongMatches;
+        return [sport, PingPongMatches];
       default:
-        return PingPongMatches;
+        return [sport, PingPongMatches];
     }
   });
+};
+
+const getMatchModelIncludes = (sport) => {
+  switch (sport.name) {
+    case 'Ping Pong':
+    case 'Table Tennis':
+      return [
+        {model: PingPongGames, as: 'games'},
+        {model: Players, as: 'players',
+          include: [
+            {model: Persons, as: 'person'}
+          ]
+        }
+      ];
+    default:
+      return PingPongMatches;
+  }
 };
 
 exports.init = (models, db, sendMsg, registerForMsg) => {
   Sports = models.Sports;
   Players = models.Players;
+  Persons = models.Persons;
   PingPongMatches = models.PingPongMatches;
+  PingPongGames = models.PingPongGames;
   sequelize = db;
   sendSocketMsg = sendMsg;
 };
@@ -37,7 +59,7 @@ exports.live = (req, res) => {
   const leagueId = req.params.leagueId;
   const sportId = req.params.sportId;
   let foundMatch;
-  return getSportModel(sportId).then(Model => {
+  return getSportMatchModel(sportId).then(Model => {
     return Model.findOne({ where: { $and: [{ leagueId: leagueId }, { final: 0 }]}});
   }).then(match => {
     if (!match || match.length === 0) {
@@ -94,12 +116,16 @@ exports.live = (req, res) => {
 exports.recent = (req, res) => {
   const leagueId = req.params.leagueId;
   const sportId = req.params.sportId;
+  let sport;
+  let Model;
   let foundMatches;
-  return getSportModel(sportId).then(Model => {
+  return getSportMatchModel(sportId).then(results => {
+    sport = results[0];
+    Model = results[1];
     return Model.findAll({
       order: [['finishTime', 'DESC']],
       limit: req.params.count !== null && req.params.count !== undefined ? req.params.count : 25,
-      include: [{all: true}]
+      include: getMatchModelIncludes(sport)
     });
   }).then(matches => {
     return res.json(matches || []);
