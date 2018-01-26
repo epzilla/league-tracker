@@ -1,6 +1,14 @@
 const passport = require('passport');
 let sequelize;
 
+const stripSensitiveFields = (user) => {
+  let obj = user.get({ plain: true });
+  delete obj.hashedPassword;
+  delete obj.salt;
+  delete obj.provider;
+  return obj;
+};
+
 exports.init = (db) => {
   sequelize = db;
 };
@@ -9,9 +17,10 @@ exports.init = (db) => {
  * Logout
  */
 exports.logout = (req, res) => {
+  const id = req.session.id;
   req.logout();
   // Clean up session in the database
-  sequelize.query(`DELETE FROM sessions WHERE sid = '${req.session.id}'`, { type: sequelize.QueryTypes.DELETE});
+  sequelize.query(`DELETE FROM sessions WHERE sid = '${id}'`, { type: sequelize.QueryTypes.DELETE});
   res.send(200);
 };
 
@@ -26,7 +35,7 @@ exports.login = (req, res, next) => {
     req.logIn(user, function (err) {
 
       if (err) return res.send(err);
-      res.json(req.user);
+      res.json(stripSensitiveFields(req.user));
     });
   })(req, res, next);
 };

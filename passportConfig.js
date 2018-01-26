@@ -1,5 +1,9 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
+
+const encryptPassword = (pw, salt) => bcrypt.hashSync(pw, salt);
+const passwordAuth = (User, plainText) => (encryptPassword(plainText, User.salt) === User.hashedPassword);
 
 /**
  * Passport configuration
@@ -34,7 +38,7 @@ module.exports = function (User) {
             message: 'This email is not registered.'
           });
         }
-        if (!user.authenticate(password)) {
+        if (!passwordAuth(user, password)) {
           return done(null, false, {
             message: 'This password is not correct.'
           });
