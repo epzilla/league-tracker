@@ -8,14 +8,16 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
       leagues: []
     };
   }
 
   componentDidMount() {
     // Fake a rest call for now
-    Rest.get(`users/${this.props.user.id}/leagues`).then(leagues => this.setState({ leagues }));
-    // Rest.get(`leagues/by-user/${this.props.user.id}`).then(leagues => this.setState({ leagues }));
+    Rest.get(`users/${this.props.user.id}`).then(user => {
+      this.setState({ user, leagues: user.leagues });
+    });
   }
 
   render() {

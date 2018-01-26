@@ -1,18 +1,45 @@
 const crypto = require('crypto');
 const constants = require('../constants');
-let Matches;
+let Sports;
+let Players;
+let TennisMatches;
+let FootballMatches;
+let BaseballMatches;
+let BasketballMatches;
+let SoccerMatches;
+let HockeyMatches;
+let FoosballMatches;
+let PingPongMatches;
 let sequelize;
 let sendSocketMsg;
 
+const getSportModel = (id) => {
+  return Sports.findById(id).then(sport => {
+    switch (sport.name) {
+      case 'Ping Pong':
+      case 'Table Tennis':
+        return PingPongMatches;
+      default:
+        return PingPongMatches;
+    }
+  });
+};
+
 exports.init = (models, db, sendMsg, registerForMsg) => {
-  Matches = models.Matches;
+  Sports = models.Sports;
+  Players = models.Players;
+  PingPongMatches = models.PingPongMatches;
   sequelize = db;
   sendSocketMsg = sendMsg;
 };
 
 exports.live = (req, res) => {
   const leagueId = req.params.leagueId;
-  return Matches.findOne({ where: { $and: [{ leagueId: leagueId }, { final: 0 }]}}).then(match => {
+  const sportId = req.params.sportId;
+  let foundMatch;
+  return getSportModel(sportId).then(Model => {
+    return Model.findOne({ where: { $and: [{ leagueId: leagueId }, { final: 0 }]}});
+  }).then(match => {
     if (!match || match.length === 0) {
       return res.json({});
     }
@@ -35,14 +62,16 @@ exports.live = (req, res) => {
     return Promise.all([
       Players.findAll({
         where: {
-          id: {
-            $in: playerIds
-          }
-        }
-      }),
-      SimpleGames.findAll({
-        where: {
-          matchId: match.id
+          $and: [
+            {
+              id: {
+                $in: playerIds
+              }
+            },
+            {
+              sportId: sportId
+            }
+          ]
         }
       })
     ]);
@@ -63,63 +92,16 @@ exports.live = (req, res) => {
 };
 
 exports.recent = (req, res) => {
+  const leagueId = req.params.leagueId;
+  const sportId = req.params.sportId;
   let foundMatches;
-  return Matches.findAll({
-    order: sequelize.literal('start_time DESC'),
-    limit: req.params.count
+  return getSportModel(sportId).then(Model => {
+    return Model.findAll({
+      order: [['finishTime', 'DESC']],
+      limit: req.params.count !== null && req.params.count !== undefined ? req.params.count : 25,
+      include: [{all: true}]
+    });
   }).then(matches => {
-    if (!matches || matches.length === 0) {
-      return res.json({});
-    }
-
-    let playerIds = [];
-    foundMatches = matches;
-    matches.forEach(m => {
-      if (playerIds.indexOf(m.player1Id) === -1) {
-        playerIds.push(m.player1Id);
-      }
-      if (playerIds.indexOf(m.player2Id) === -1) {
-        playerIds.push(m.player2Id);
-      }
-      if (m.partner1Id && playerIds.indexOf(m.partner1Id) === -1) {
-        playerIds.push(m.partner1Id);
-      }
-      if (m.partner2Id && playerIds.indexOf(m.partner2Id) === -1) {
-        playerIds.push(m.partner2Id);
-      }
-    });
-
-    return Promise.all([
-      Players.findAll({
-        where: {
-          id: {
-            $in: playerIds
-          }
-        }
-      }),
-      SimpleGames.findAll({
-        where: {
-          matchId: {
-            $in: matches.map(m => m.id)
-          }
-        }
-      })
-    ]);
-  }).then(results => {
-    let players = results[0];
-    let augmentedMatches = foundMatches.map(m => augmentMatch(m, players));
-    let games = results[1];
-    games.map(g => {
-      let match = augmentedMatches.find(m => m.id === g.matchId);
-      if (match) {
-        g = augmentGame(g, match)
-        if (!match.games) {
-          match.games = [];
-        }
-        match.games.push(g);
-        return g;
-      }
-    });
-    return res.json(augmentedMatches);
+    return res.json(matches || []);
   });
 };

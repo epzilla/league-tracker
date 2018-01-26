@@ -34,9 +34,27 @@ const server = http.createServer(app);
 
 const models = {};
 fs.readdirSync(__dirname + '/models').forEach(m => {
-  let name = m.slice(0, -3);
-  models[name] = database.import(__dirname + `/models/${m}`);
+  if (m.slice(-3) === '.js') {
+    let name = m.slice(0, -3);
+    models[name] = database.import(__dirname + `/models/${m}`);
+  }
 });
+
+fs.readdirSync(__dirname + '/models/matches').forEach(m => {
+  if (m.slice(-3) === '.js') {
+    let name = m.slice(0, -3);
+    models[name] = database.import(__dirname + `/models/matches/${m}`);
+  }
+});
+
+fs.readdirSync(__dirname + '/models/matchPeriods').forEach(m => {
+  if (m.slice(-3) === '.js') {
+    let name = m.slice(0, -3);
+    models[name] = database.import(__dirname + `/models/matchPeriods/${m}`);
+  }
+});
+
+require('./modelAssociations')(models);
 
 const wss = new WebSocket.Server({ server });
 wss.on('connection', ws => {

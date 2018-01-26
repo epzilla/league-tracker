@@ -25,7 +25,7 @@ export default class App extends Component {
     this.state = {
       menu: false,
       kb: false,
-      user: {"id":72,"fname":"Clare","lname":"Dayer","email":"cdayer1z@addtoany.com","mi":"T","avatar":"https://robohash.org/dictaomnisut.jpg?size=50x50&set=set1","phone":"584-260-0793","altPhone":"784-772-4205"},
+      user: {"id":1,"fname":"Adam","lname":"Epling","email":"adamepling@gmail.com","mi":"S","avatar":"https://robohash.org/dictaomnisut.jpg?size=50x50&set=set1","phone":"584-260-0793","altPhone":"784-772-4205"},
       debugConsole: true,
       alerts: []
     };

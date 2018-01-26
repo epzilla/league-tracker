@@ -8,6 +8,7 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   matches.init(models, sequelize, sendSocketMsg, registerForMsg);
   players.init(models);
   leagues.init(models);
+  users.init(models);
   divisionStandings.init(models);
 
   // Players
@@ -15,8 +16,8 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   app.post('/api/players', players.create);
 
   // Matches/Games
-  app.get('/api/matches/:leagueId/recent', matches.recent);
-  app.get('/api/matches/:leagueId/live', matches.live);
+  app.get('/api/matches/recent/:sportId/:leagueId', matches.recent);
+  app.get('/api/matches/live/:sportId/:leagueId', matches.live);
   app.get('/api/standings/:leagueId', divisionStandings.get);
   app.get('/api/leagues/:leagueId', leagues.get);
   app.get('/api/users/:userId', users.get);
