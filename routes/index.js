@@ -11,6 +11,8 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   players.init(models);
   leagues.init(models);
   users.init(models);
+  session.init(sequelize);
+
   divisionStandings.init(models);
 
   app.use('/api/*', middleware.auth);

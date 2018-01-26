@@ -1,10 +1,17 @@
 const passport = require('passport');
+let sequelize;
+
+exports.init = (db) => {
+  sequelize = db;
+};
 
 /**
  * Logout
  */
 exports.logout = (req, res) => {
   req.logout();
+  // Clean up session in the database
+  sequelize.query(`DELETE FROM sessions WHERE sid = '${req.session.id}'`, { type: sequelize.QueryTypes.DELETE});
   res.send(200);
 };
 

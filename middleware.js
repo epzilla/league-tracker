@@ -7,7 +7,11 @@ module.exports = {
    *  Protect routes on your api from unauthenticated access
    */
   auth: function auth(req, res, next) {
-    if (req.isAuthenticated() || (req.baseUrl === '/api/users' && req.method === 'POST')) return next();
+    if (req.isAuthenticated() ||
+        (req.method === 'POST' && req.baseUrl === '/api/users') ||
+        (req.baseUrl === '/api/session')) {
+      return next();
+    }
     res.sendStatus(401);
   },
 
