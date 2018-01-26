@@ -3,6 +3,8 @@ const matches = require('./matches');
 const divisionStandings = require('./divisionStandings');
 const leagues = require('./leagues');
 const users = require('./users');
+const session = require('./session');
+const middleware = require('../middleware');;
 
 module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg) {
   matches.init(models, sequelize, sendSocketMsg, registerForMsg);
@@ -10,6 +12,15 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   leagues.init(models);
   users.init(models);
   divisionStandings.init(models);
+
+  app.use('/api/*', middleware.auth);
+
+  app.post('/api/session', session.login);
+  app.del('/api/session', session.logout);
+
+  // Users
+  app.post('/api/users', users.create);
+  app.post('/api/change-password', users.changePassword);
 
   // Players
   app.get('/api/players', players.get);
@@ -53,5 +64,5 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   //   .catch(e => res.status(500).send(e));
   // });
 
-  app.get('/*', (req, res) => res.render('index'));
+  app.get('/*', middleware.setUserCookie, (req, res) => res.render('index'));
 };

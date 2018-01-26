@@ -5,14 +5,14 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       field: 'id',
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: undefined,
+      allowNull: true,
+      autoIncrement: true,
       primaryKey: true
     },
     username: {
       field: 'username',
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       defaultValue: undefined
     },
     fname: {
@@ -57,10 +57,22 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       defaultValue: undefined
     },
-    password: {
-      field: 'password',
+    hashedPassword: {
+      field: 'hashedPassword',
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    provider: {
+      field: 'provider',
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    salt: {
+      field: 'salt',
+      type: DataTypes.STRING,
+      allowNull: true,
       defaultValue: undefined
     },
     phone: {

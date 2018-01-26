@@ -7,6 +7,9 @@ const path = require('path');
 const WebSocket = require('ws');
 const morgan = require('morgan')
 const chalk = require('chalk');
+const passport = require('passport');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
 let socketCallbacks = {};
 
@@ -30,6 +33,20 @@ app.use(function (req, res, next) {
 app.use(morgan('dev'));
 app.set('views', path.join(__dirname, 'public/views'));
 app.set('view engine', 'pug');
+
+// Persist sessions with sequelizeStore
+app.use(session({
+  secret: 'leaguetracker super secret',
+  resave: false,
+  store: new SequelizeStore({
+    db: database
+  })
+}));
+
+//use passport session
+app.use(passport.initialize());
+app.use(passport.session());
+
 const server = http.createServer(app);
 
 const models = {};
@@ -97,6 +114,7 @@ const registerForSocketMsgs = (type, cb) => {
   }
 };
 
+require('./passportConfig')(models['Users']);
 require('./routes')(models, app, database, sendSocketMsg, registerForSocketMsgs);
 
 // Create database and listen
