@@ -4,6 +4,7 @@ import { route, Router } from 'preact-router';
 import Config from '../config';
 import Header from './header';
 import LeagueHome from '../routes/leagueHome';
+import Login from '../routes/login';
 import Home from '../routes/home';
 import Stats from '../routes/stats';
 import DebugConsole from './debugConsole';
@@ -51,6 +52,9 @@ export default class App extends Component {
       document.body.style.setProperty('--primaryBtnBorder', pbg ? lightenOrDarken(pbg, -40) : '#888');
       document.body.style.setProperty('--secondaryBtnBorder', sbg ? lightenOrDarken(sbg, -40) : '#888');
     }
+
+    Rest.get('users/me').then(user => this.setState({ user }))
+      .catch(err => route('/login'));
 
     if (this.config && this.config.useGiphy) {
       Rest.getExternal(`https://api.giphy.com/v1/gifs/search?api_key=${this.config.giphyAPIkey}&q=ping pong&limit=10&offset=${Math.random() * 200}&rating=PG-13&lang=en`)
@@ -165,7 +169,8 @@ export default class App extends Component {
 					showKeyboardShortcuts={() => this.showKeyboardShortcuts()}
 				/>
 				<Router onChange={this.handleRoute}>
-					<LeagueHome path="/leagues/:leagueId" config={this.config} postAlert={this.postAlert} />
+					<Login path="/login" config={this.config} />
+          <LeagueHome path="/leagues/:leagueId" config={this.config} postAlert={this.postAlert} />
           <Home path="/" config={this.config} postAlert={this.postAlert} user={this.state.user} />
           <Stats path="/stats" config={this.config} />
 				</Router>

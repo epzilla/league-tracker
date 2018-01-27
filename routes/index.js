@@ -4,7 +4,7 @@ const divisionStandings = require('./divisionStandings');
 const leagues = require('./leagues');
 const users = require('./users');
 const session = require('./session');
-const middleware = require('../middleware');;
+const middleware = require('../middleware');
 
 module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg) {
   matches.init(models, sequelize, sendSocketMsg, registerForMsg);
@@ -23,6 +23,7 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   // Users
   app.post('/api/users', users.create);
   app.post('/api/change-password', users.changePassword);
+  app.get('/api/users/me', users.me);
 
   // Players
   app.get('/api/players', players.get);

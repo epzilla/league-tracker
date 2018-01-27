@@ -4,11 +4,13 @@ const bcrypt = require('bcryptjs');
 
 const encryptPassword = (pw, salt) => bcrypt.hashSync(pw, salt);
 const passwordAuth = (User, plainText) => (encryptPassword(plainText, User.salt) === User.hashedPassword);
+let User;
 
 /**
  * Passport configuration
  */
-module.exports = function (User) {
+module.exports = function (usr) {
+  User = usr;
 
   passport.serializeUser(function (user, done) {
     done(null, user);
