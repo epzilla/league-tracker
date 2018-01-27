@@ -37,6 +37,7 @@ app.set('view engine', 'pug');
 // Persist sessions with sequelizeStore
 app.use(session({
   secret: 'leaguetracker super secret',
+  saveUninitialized: false,
   resave: false,
   store: new SequelizeStore({
     db: database

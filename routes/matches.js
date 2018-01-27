@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const constants = require('../constants');
+let Op;
 let Sports;
 let Players;
 let Persons;
@@ -46,6 +47,7 @@ const getMatchModelIncludes = (sport) => {
 };
 
 exports.init = (models, db, sendMsg, registerForMsg) => {
+  Op = db.Op;
   Sports = models.Sports;
   Players = models.Players;
   Persons = models.Persons;
@@ -60,7 +62,7 @@ exports.live = (req, res) => {
   const sportId = req.params.sportId;
   let foundMatch;
   return getSportMatchModel(sportId).then(Model => {
-    return Model.findOne({ where: { $and: [{ leagueId: leagueId }, { final: 0 }]}});
+    return Model.findOne({ where: { [Op.and]: [{ leagueId: leagueId }, { final: 0 }]}});
   }).then(match => {
     if (!match || match.length === 0) {
       return res.json({});
@@ -84,10 +86,10 @@ exports.live = (req, res) => {
     return Promise.all([
       Players.findAll({
         where: {
-          $and: [
+          [Op.and]: [
             {
               id: {
-                $in: playerIds
+                [Op.in]: playerIds
               }
             },
             {

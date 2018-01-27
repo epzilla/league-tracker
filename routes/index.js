@@ -18,7 +18,7 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   app.use('/api/*', middleware.auth);
 
   app.post('/api/session', session.login);
-  app.del('/api/session', session.logout);
+  app.delete('/api/session', session.logout);
 
   // Users
   app.post('/api/users', users.create);

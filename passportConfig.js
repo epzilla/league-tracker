@@ -19,10 +19,7 @@ module.exports = function (User) {
       return done('No user');
     }
     return User.findById(user.id).then(u => {
-      delete u['password'];
-      delete u['salt'];
-      delete u['hashedPassword'];
-      return done(null, user);
+      return done(null, u);
     }).catch(err => {
       return done(err);
     });
