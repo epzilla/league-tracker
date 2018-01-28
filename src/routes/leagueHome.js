@@ -22,15 +22,17 @@ export default class LeagueHome extends Component {
     WebSocketService.subscribe(MATCH_STARTED, this.onMatchStart);
     WebSocketService.subscribe(MATCH_FINISHED, this.onMatchFinish);
     this.getLeagueInfo().then(league => {
-      this.setState({ league }, () => {
-        this.getMostRecent();
-        this.getLive();
-        // this.getStandings();
-      });
+      this.getMostRecent();
+      this.getLive();
+      // this.getStandings();
+      if (this.props.setLeague) {
+        this.props.setLeague(league);
+      }
     })
   }
 
   componentWillUnmount() {
+    this.props.setLeague(null);
     WebSocketService.unsubscribe(MATCH_STARTED, this.onMatchStart);
     WebSocketService.unsubscribe(MATCH_FINISHED, this.onMatchFinish);
   }

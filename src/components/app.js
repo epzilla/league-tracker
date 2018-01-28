@@ -23,11 +23,14 @@ export default class App extends Component {
     super(props);
     this.ls = LocalStorageService;
     this.config = Config;
+    this.siteName = this.config.siteName
     this.state = {
       menu: false,
       kb: false,
       user: {"id":1,"fname":"Adam","lname":"Epling","email":"adamepling@gmail.com","mi":"S","avatar":"https://robohash.org/dictaomnisut.jpg?size=50x50&set=set1","phone":"584-260-0793","altPhone":"784-772-4205"},
       debugConsole: true,
+      league: null,
+      navTitle: this.siteName,
       alerts: []
     };
     let conf = this.ls.get('config');
@@ -137,6 +140,10 @@ export default class App extends Component {
     this.canReset = true;
   };
 
+  setLeague = (league) => {
+    this.setState({ league, navTitle: league ? league.name : this.siteName });
+  };
+
   resetAppAfterCode = () => {
     if (this.canReset) {
       LocalStorageService.deleteAll();
@@ -165,12 +172,13 @@ export default class App extends Component {
 				<Header
 					config={this.config}
           menu={this.state.menu}
+          title={this.state.navTitle}
 					menuToggledCallback={(e) => this.menuToggledCallback(e)}
 					showKeyboardShortcuts={() => this.showKeyboardShortcuts()}
 				/>
 				<Router onChange={this.handleRoute}>
 					<Login path="/login" config={this.config} />
-          <LeagueHome path="/leagues/:leagueId" config={this.config} postAlert={this.postAlert} />
+          <LeagueHome path="/leagues/:leagueId" config={this.config} postAlert={this.postAlert} setLeague={this.setLeague} />
           <Home path="/" config={this.config} postAlert={this.postAlert} user={this.state.user} />
           <Stats path="/stats" config={this.config} />
 				</Router>

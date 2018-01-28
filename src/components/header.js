@@ -29,7 +29,7 @@ export default class Header extends Component {
     return (
       <header class="header">
         <button class="btn menu-btn" onClick={() => this.toggleMenu()}>Menu</button>
-        <Link class="center" href="/" tabindex="1"><h1>{ this.props.config.siteName }</h1></Link>
+        <h1 class="center" tabindex="1">{ this.props.title ? this.props.title : this.props.config.siteName }</h1>
         <nav class={this.state.menu ? 'show' : 'hide'}>
           <div class="nav-links flex-pull-right">
             <Link activeClassName="active" href="/" tabindex="1">Home</Link>
