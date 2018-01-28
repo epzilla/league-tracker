@@ -125,7 +125,7 @@ const PingPongBoxScore = ({ match, jumbotron, scoreFlash, gameFlash, matchFlash 
         }
       </p>
     );
-  } else {
+  } else if (match.finished) {
     footer = (
       <div class="flex-col flex-center">
         <p class="center">{ stats.resultString }</p>

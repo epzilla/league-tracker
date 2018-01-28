@@ -24,8 +24,8 @@ export default class LeagueHome extends Component {
     this.getLeagueInfo().then(league => {
       this.setState({ league }, () => {
         this.getMostRecent();
-        // this.getLive();
-        this.getStandings();
+        this.getLive();
+        // this.getStandings();
       });
     })
   }
@@ -82,7 +82,12 @@ export default class LeagueHome extends Component {
           : null
         }
         { liveMatches && liveMatches.length > 0 ?
-          liveMatches.map(lm => <LiveScoreboard match={ lm } sport={this.props.sport} />)
+          <div class="recent-matches">
+            <h3 class="align-center primary-text">Live Matches</h3>
+            <ul class="recent-match-list">
+              { liveMatches.map(rm => <li><BoxScore match={rm} sport={this.props.sport} /></li>) }
+            </ul>
+          </div>
           : null
         }
       </div>

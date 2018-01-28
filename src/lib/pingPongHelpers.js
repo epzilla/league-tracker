@@ -20,7 +20,7 @@ export const getTeamName = (match, teamNum) => {
 
   if (match.doubles) {
     let partner = teamNum === 1 ? match.players.find(p => p.id === match.partner1Id) : match.players.find(p => p.id === match.partner2Id);
-    return `${player.lname} / ${partner.lname}`;
+    return `${player.person.lname} / ${partner.person.lname}`;
   } else {
     return player.person.fname ? `${player.person.fname} ${player.person.lname}` : player.person.lname;
   }
