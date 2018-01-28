@@ -15,6 +15,7 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
 
   divisionStandings.init(models);
 
+  app.use('/*', middleware.setUserCookie);
   app.use('/api/*', middleware.auth);
 
   app.post('/api/session', session.login);

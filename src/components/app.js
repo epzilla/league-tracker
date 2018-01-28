@@ -5,6 +5,7 @@ import Config from '../config';
 import Header from './header';
 import LeagueHome from '../routes/leagueHome';
 import Login from '../routes/login';
+import Logout from '../routes/logout';
 import Home from '../routes/home';
 import Stats from '../routes/stats';
 import DebugConsole from './debugConsole';
@@ -57,7 +58,10 @@ export default class App extends Component {
     }
 
     Rest.get('users/me').then(user => this.setState({ user }))
-      .catch(err => route('/login'));
+      .catch(err => {
+        console.warn('I hit the error callback');
+        route('/login');
+      });
 
     if (this.config && this.config.useGiphy) {
       Rest.getExternal(`https://api.giphy.com/v1/gifs/search?api_key=${this.config.giphyAPIkey}&q=ping pong&limit=10&offset=${Math.random() * 200}&rating=PG-13&lang=en`)
@@ -173,11 +177,13 @@ export default class App extends Component {
 					config={this.config}
           menu={this.state.menu}
           title={this.state.navTitle}
+          user={this.state.user}
 					menuToggledCallback={(e) => this.menuToggledCallback(e)}
 					showKeyboardShortcuts={() => this.showKeyboardShortcuts()}
 				/>
 				<Router onChange={this.handleRoute}>
 					<Login path="/login" config={this.config} />
+          <Logout path="/logout" config={this.config} />
           <LeagueHome path="/leagues/:leagueId" config={this.config} postAlert={this.postAlert} setLeague={this.setLeague} />
           <Home path="/" config={this.config} postAlert={this.postAlert} user={this.state.user} />
           <Stats path="/stats" config={this.config} />

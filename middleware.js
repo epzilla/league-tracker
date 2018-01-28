@@ -20,7 +20,10 @@ module.exports = {
    */
   setUserCookie: function setUserCookie(req, res, next) {
     if (req.user) {
-      res.cookie('user', JSON.stringify(req.user.userInfo));
+      res.cookie('user', JSON.stringify(req.user));
+    } else {
+      res.clearCookie('user');
+      res.clearCookie('connect.sid');
     }
     next();
   }

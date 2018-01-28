@@ -18,10 +18,13 @@ exports.init = (db) => {
  */
 exports.logout = (req, res) => {
   const id = req.session.id;
-  req.logout();
+  req.session.destroy();
   // Clean up session in the database
-  sequelize.query(`DELETE FROM sessions WHERE sid = '${id}'`, { type: sequelize.QueryTypes.DELETE});
-  res.send(200);
+  return sequelize.query(`DELETE FROM sessions WHERE sid = '${id}'`, { type: sequelize.QueryTypes.DELETE}).then(() => {
+    return res.send(200);
+  }).catch(err => {
+    return res.status(400).send(err);
+  });
 };
 
 /**
