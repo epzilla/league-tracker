@@ -6,6 +6,7 @@ import Header from './header';
 import LeagueHome from '../routes/leagueHome';
 import Login from '../routes/login';
 import Logout from '../routes/logout';
+import Signup from '../routes/signUp';
 import Home from '../routes/home';
 import Stats from '../routes/stats';
 import DebugConsole from './debugConsole';
@@ -28,7 +29,7 @@ export default class App extends Component {
     this.state = {
       menu: false,
       kb: false,
-      user: {"id":1,"fname":"Adam","lname":"Epling","email":"adamepling@gmail.com","mi":"S","avatar":"https://robohash.org/dictaomnisut.jpg?size=50x50&set=set1","phone":"584-260-0793","altPhone":"784-772-4205"},
+      user: null,
       debugConsole: true,
       league: null,
       navTitle: this.siteName,
@@ -59,8 +60,9 @@ export default class App extends Component {
 
     Rest.get('users/me').then(user => this.setState({ user }))
       .catch(err => {
-        console.warn('I hit the error callback');
-        route('/login');
+        if (this.currentUrl.indexOf('sign-up') === -1) {
+          route('/login');
+        }
       });
 
     if (this.config && this.config.useGiphy) {
@@ -170,6 +172,12 @@ export default class App extends Component {
     this.postAlert({ type: 'error', msg: `Oh boy, now you've done it! What did I tell you, man???`}, 999999999);
   };
 
+  onLogout = () => {
+    document.cookie = 'user=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    this.setState({ user: null });
+    route('/login');
+  }
+
 	render() {
 		return (
 			<div id="app">
@@ -183,7 +191,8 @@ export default class App extends Component {
 				/>
 				<Router onChange={this.handleRoute}>
 					<Login path="/login" config={this.config} />
-          <Logout path="/logout" config={this.config} />
+          <Logout path="/logout" config={this.config} callback={() => this.onLogout()} />
+          <Signup path="/sign-up" config={this.config} />
           <LeagueHome path="/leagues/:leagueId" config={this.config} postAlert={this.postAlert} setLeague={this.setLeague} />
           <Home path="/" config={this.config} postAlert={this.postAlert} user={this.state.user} />
           <Stats path="/stats" config={this.config} />

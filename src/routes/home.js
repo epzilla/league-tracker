@@ -1,6 +1,7 @@
 import { Component } from 'preact';
 import Rest from '../lib/rest-service';
 import { Link } from 'preact-router/match';
+import { route } from 'preact-router';
 import LocalStorageService from '../lib/local-storage-service';
 import WebSocketService from '../lib/websocket-service';
 
@@ -14,10 +15,12 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    // Fake a rest call for now
-    Rest.get(`users/${this.props.user.id}`).then(user => {
-      this.setState({ user, leagues: user.leagues });
-    });
+    const { user } = this.props;
+    if (user) {
+      Rest.get(`users/${user.id}/leagues`).then(leagues => {
+        this.setState({ user, leagues: leagues });
+      });
+    }
   }
 
   render() {
