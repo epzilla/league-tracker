@@ -84,7 +84,7 @@ export default class LeagueHome extends Component {
     let { liveMatches, recentMatches, league, user } = this.state;
     return (
       <article class="main home league-home">
-        { user ? <h3>Admin privileges!</h3> : null }
+        {/* user ? <h3>Admin privileges!</h3> : null */}
         <section class="league-home-tabs">
           <SegmentedControl
             options={[

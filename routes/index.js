@@ -32,6 +32,7 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   // Matches/Games
   app.get('/api/matches/recent/:sportId/:leagueSlug', matches.recent);
   app.get('/api/matches/live/:sportId/:leagueSlug', matches.live);
+  app.get('/api/matches/upcoming/:sportId/:leagueSlug', matches.upcoming);
   app.get('/api/standings/:leagueSlug', divisionStandings.get);
   app.get('/api/leagues/:leagueSlug', leagues.get);
   app.get('/api/users/:userId', users.get);

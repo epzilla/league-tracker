@@ -91,6 +91,12 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
+    started: {
+      field: 'started',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
     finished: {
       field: 'finished',
       type: DataTypes.INTEGER,

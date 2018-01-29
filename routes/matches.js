@@ -103,3 +103,25 @@ exports.recent = (req, res) => {
     return res.json(matches || []);
   });
 };
+
+exports.upcoming = (req, res) => {
+  const leagueSlug = req.params.leagueSlug;
+  const sportId = req.params.sportId;
+  let sport;
+  let Model;
+  return Promise.all([
+    Leagues.findOne({ where: { slug: leagueSlug }}),
+    getSportMatchModel(sportId)
+  ]).then(results => {
+    let league = results[0];
+    sport = results[1][0];
+    Model = results[1][1];
+    return Model.findAll({
+      where: { started: 0, leagueId: league.id },
+      order: [['startTime', 'ASC']],
+      include: getMatchModelIncludes(sport)
+    });
+  }).then(matches => {
+    return res.json(matches || []);
+  });
+};
