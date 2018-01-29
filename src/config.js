@@ -9,7 +9,7 @@ export default {
   playAllGames: 1,
   updateEveryPoint: 0,
   themeProperties: {
-    pageBg: '#f4fcff',
+    pageBg: '#edeef0', // '#f4fcff',
     colorDefaultText: '#444',
     colorMediumText: '#888',
     colorLighterText: '#AAA',
@@ -25,6 +25,7 @@ export default {
     footerTextColor: '#405784',
     activeLinkColor: 'white',
     scoreFlashColor: 'rgba(68, 178, 181, 0.5)',
+    liveScoreHeadingBg: '#d9ef2b',
     blockFont: "'Sanchez', 'Lato', -apple-system, BlinkMacSystemFont, sytem-ui, 'Helvetica Neue', arial, sans-serif"
   },
   highlightImages: {

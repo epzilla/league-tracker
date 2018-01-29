@@ -1,5 +1,105 @@
+.main.league-home {
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+.league-left-sidebar,
+.league-right-sidebar,
+.league-main {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0.5rem;
+  background: white;
+}
+
+.league-left-sidebar,
+.league-right-sidebar {
+  width: 350px;
+}
+
+.league-main {
+  flex: 1;
+}
+
+.league-standings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.match-list {
+  width: 100%;
+
+  h3 {
+    text-transform: uppercase;
+    background: var(--colorMediumText);
+    color: white;
+    font-size: 1rem;
+    margin: 0;
+    padding: 0.25rem;
+    user-select: none;
+
+    &.live {
+      background: var(--liveScoreHeadingBg);
+      color: var(--colorDefaultText)
+    }
+  }
+}
+
 .recent-match-list {
   list-style-type: none;
   margin: 0;
   padding: 0;
+
+  li {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+
+    .scoreboard.box-score {
+      margin: 0;
+      min-width: unset;
+      padding: 0.5rem;
+      width: calc(100% - 1rem);
+      border: none;
+      border-radius: 0px;
+
+      .date-time-header {
+        margin: 0;
+        font-size: 0.75rem;
+        font-style: normal;
+        text-decoration: none;
+      }
+
+      .player-name,
+      .score-number-box {
+        font-size: 1rem;
+      }
+
+      .player-name {
+        padding: 3px;
+
+        &.winner:before {
+          top: 0.5em;
+          left: -0.5em;
+        }
+      }
+
+      .score-number-box {
+        margin: 0 2px;
+        width: 2rem;
+      }
+
+      .stats-row {
+        display: none;
+      }
+    }
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    &:first-of-type {
+      border-top: 1px solid #ddd;
+    }
+  }
 }

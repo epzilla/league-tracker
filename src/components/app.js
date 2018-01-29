@@ -8,7 +8,10 @@ import Login from '../routes/login';
 import Logout from '../routes/logout';
 import Signup from '../routes/signUp';
 import Home from '../routes/home';
-import Stats from '../routes/stats';
+import LeagueStats from '../routes/leagueStats';
+import TeamStats from '../routes/teamStats';
+import LeagueSchedule from '../routes/leagueSchedule';
+import TeamSchedule from '../routes/teamSchedule';
 import DebugConsole from './debugConsole';
 import NotSoSecretCode from './notSoSecretCode';
 import GlobalKeyboardShortcuts from './globalKeyboardShortcuts';
@@ -30,6 +33,7 @@ export default class App extends Component {
       menu: false,
       kb: false,
       user: null,
+      currentUrl: null,
       debugConsole: true,
       league: null,
       navTitle: this.siteName,
@@ -83,6 +87,7 @@ export default class App extends Component {
 	 */
 	handleRoute = e => {
     this.currentUrl = e.url;
+    this.setState({ currentUrl: e.url });
     this.menuToggledCallback(false);
   };
 
@@ -186,6 +191,7 @@ export default class App extends Component {
           menu={this.state.menu}
           title={this.state.navTitle}
           user={this.state.user}
+          currentUrl={this.state.currentUrl}
 					menuToggledCallback={(e) => this.menuToggledCallback(e)}
 					showKeyboardShortcuts={() => this.showKeyboardShortcuts()}
 				/>
@@ -194,8 +200,11 @@ export default class App extends Component {
           <Logout path="/logout" config={this.config} callback={() => this.onLogout()} />
           <Signup path="/sign-up" config={this.config} />
           <LeagueHome path="/leagues/:leagueId" config={this.config} postAlert={this.postAlert} setLeague={this.setLeague} />
+          <LeagueStats path="leagues/:leagueId/stats" config={this.config} />
+          <LeagueSchedule path="leagues/:leagueId/schedule" config={this.config} />
+          <TeamStats path="teams/:teamId/stats" config={this.config} />
+          <TeamSchedule path="teams/:teamId/schedule" config={this.config} />
           <Home path="/" config={this.config} postAlert={this.postAlert} user={this.state.user} />
-          <Stats path="/stats" config={this.config} />
 				</Router>
         {/*
           (this.config.devMode && !this.state.debugConsole) ?

@@ -2,6 +2,8 @@ import { Component } from 'preact';
 import Rest from '../lib/rest-service';
 import { Link } from 'preact-router/match';
 import { NEW_MATCH_PERMISSION_GRANTED, MATCH_STARTED, MATCH_FINISHED } from '../lib/constants';
+import LeagueStandings from '../components/leagueStandings';
+import ScheduleList from '../components/scheduleList';
 import LiveScoreboard from '../components/liveScoreboard';
 import BoxScore from '../components/boxScore';
 import LocalStorageService from '../lib/local-storage-service';
@@ -71,28 +73,36 @@ export default class LeagueHome extends Component {
   };
 
   render() {
-    let { liveMatches, recentMatches } = this.state;
+    let { liveMatches, recentMatches, league } = this.state;
     return (
-      <div class="main home league-home">
-        { recentMatches && recentMatches.length > 0 ?
-          <div class="recent-matches">
-            <h3 class="align-center primary-text">Recent Matches</h3>
-            <ul class="recent-match-list">
-              { recentMatches.map(rm => <li><BoxScore match={rm} sport={this.props.sport} /></li>) }
-            </ul>
-          </div>
-          : null
-        }
-        { liveMatches && liveMatches.length > 0 ?
-          <div class="recent-matches">
-            <h3 class="align-center primary-text">Live Matches</h3>
-            <ul class="recent-match-list">
-              { liveMatches.map(rm => <li><BoxScore match={rm} sport={this.props.sport} /></li>) }
-            </ul>
-          </div>
-          : null
-        }
-      </div>
+      <article class="main home league-home">
+        <section class="league-left-sidebar">
+          { liveMatches && liveMatches.length > 0 ?
+            <div class="match-list">
+              <h3 class="align-center live">Live</h3>
+              <ul class="recent-match-list">
+                { liveMatches.map(rm => <li><BoxScore match={rm} sport={this.props.sport} /></li>) }
+              </ul>
+            </div>
+            : null
+          }
+          { recentMatches && recentMatches.length > 0 ?
+            <div class="match-list">
+              <h3 class="align-center">Recent</h3>
+              <ul class="recent-match-list">
+                { recentMatches.map(rm => <li><BoxScore match={rm} sport={this.props.sport} /></li>) }
+              </ul>
+            </div>
+            : null
+          }
+        </section>
+        <section class="league-main">
+          <LeagueStandings league={league} />
+        </section>
+        <section class="league-right-sidebar">
+          <ScheduleList league={league} upcoming={true} />
+        </section>
+      </article>
     );
   }
 }

@@ -33,9 +33,10 @@ export default class Header extends Component {
         <nav class={this.state.menu ? 'show' : 'hide'}>
           { this.props.user ?
             <div class="nav-links flex-pull-right">
-              <Link activeClassName="active" href="/" tabindex="1">Home</Link>
-              <Link activeClassName="active" href="/stats" tabindex="2">Stats</Link>
-              <Link href="/logout" tabindex="3">Log Out</Link>
+              <Link activeClassName="active" href="/" tabindex="1">My Leagues</Link>
+              { this.props.currentUrl && this.props.currentUrl !== '/' ? <Link activeClassName="active" href={location.pathname + "/schedule"} tabindex="2">Schedule</Link> : null }
+              { this.props.currentUrl && this.props.currentUrl !== '/' ? <Link activeClassName="active" href={location.pathname + "/stats"} tabindex="3">Stats</Link> : null }
+              <Link href="/logout" tabindex="4">Log Out</Link>
             </div>
             : null
           }

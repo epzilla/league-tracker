@@ -23,6 +23,14 @@ export default class Home extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user) {
+      Rest.get(`users/${nextProps.user.id}/leagues`).then(leagues => {
+        this.setState({ user: nextProps.user, leagues: leagues });
+      });
+    }
+  }
+
   render() {
     return (
       <div class="main home">

@@ -6,7 +6,7 @@ import SegmentedControl from '../components/segmentedControl';
 import Toggle from '../components/toggle';
 import CSSTransitionGroup from 'preact-css-transition-group';
 
-export default class Stats extends Component {
+export default class LeagueSchedule extends Component {
   constructor(props) {
     super(props);
   }
