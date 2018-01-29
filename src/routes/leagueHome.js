@@ -4,8 +4,8 @@ import { Link } from 'preact-router/match';
 import { NEW_MATCH_PERMISSION_GRANTED, MATCH_STARTED, MATCH_FINISHED } from '../lib/constants';
 import LeagueStandings from '../components/leagueStandings';
 import ScheduleList from '../components/scheduleList';
-import LiveScoreboard from '../components/liveScoreboard';
-import BoxScore from '../components/boxScore';
+import MatchList from '../components/matchList';
+import SegmentedControl from '../components/segmentedControl';
 import LocalStorageService from '../lib/local-storage-service';
 import WebSocketService from '../lib/websocket-service';
 
@@ -16,7 +16,8 @@ export default class LeagueHome extends Component {
       league: null,
       recentMatches: [],
       standings: [],
-      liveMatches: []
+      liveMatches: [],
+      tab: 0
     };
   }
 
@@ -72,34 +73,37 @@ export default class LeagueHome extends Component {
     }, 10000);
   };
 
+  toggleTab = (e) => {
+    this.setState({ tab: e });
+  };
+
   render() {
     let { liveMatches, recentMatches, league } = this.state;
     return (
       <article class="main home league-home">
-        <section class="league-left-sidebar">
-          { liveMatches && liveMatches.length > 0 ?
-            <div class="match-list">
-              <h3 class="align-center live">Live</h3>
-              <ul class="recent-match-list">
-                { liveMatches.map(rm => <li><BoxScore match={rm} sport={this.props.sport} /></li>) }
-              </ul>
-            </div>
-            : null
-          }
-          { recentMatches && recentMatches.length > 0 ?
-            <div class="match-list">
-              <h3 class="align-center">Recent</h3>
-              <ul class="recent-match-list">
-                { recentMatches.map(rm => <li><BoxScore match={rm} sport={this.props.sport} /></li>) }
-              </ul>
-            </div>
-            : null
-          }
+        <section class="league-home-tabs">
+          <SegmentedControl
+            options={[
+              { label: 'Standings', value: 0 },
+              { label: 'Scores', value: 1 }
+            ]}
+            value={this.state.tab}
+            onChange={(e) => this.toggleTab(e)}
+          />
         </section>
-        <section class="league-main">
+        <section class="league-home-col league-left-sidebar">
+          { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} /> : null }
+          { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} /> : null }
+        </section>
+        <section class={`league-home-col league-main ${this.state.tab === 0 ? 'show' : 'hide'}`}>
           <LeagueStandings league={league} />
         </section>
-        <section class="league-right-sidebar">
+        <section class={`league-home-col hide-large league-main ${this.state.tab === 1 ? 'show' : 'hide'}`}>
+          { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} /> : null }
+          { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} /> : null }
+          <ScheduleList league={league} upcoming={true} />
+        </section>
+        <section class="league-home-col league-right-sidebar">
           <ScheduleList league={league} upcoming={true} />
         </section>
       </article>
