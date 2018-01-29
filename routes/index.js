@@ -16,14 +16,13 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   divisionStandings.init(models);
 
   app.use('/*', middleware.setUserCookie);
-  app.use('/api/*', middleware.auth);
 
   app.post('/api/session', session.login);
-  app.delete('/api/session', session.logout);
+  app.delete('/api/session', middleware.auth, session.logout);
 
   // Users
-  app.post('/api/users', users.create);
-  app.post('/api/change-password', users.changePassword);
+  app.post('/api/users', middleware.auth, users.create);
+  app.post('/api/change-password', middleware.auth, users.changePassword);
   app.get('/api/users/me', users.me);
 
   // Players

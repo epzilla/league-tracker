@@ -64,7 +64,7 @@ export default class App extends Component {
 
     Rest.get('users/me').then(user => this.setState({ user }))
       .catch(err => {
-        if (this.currentUrl.indexOf('sign-up') === -1) {
+        if (this.currentUrl === '/') {
           route('/login');
         }
       });

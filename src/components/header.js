@@ -38,7 +38,10 @@ export default class Header extends Component {
               { this.props.currentUrl && this.props.currentUrl !== '/' ? <Link activeClassName="active" href={location.pathname + "/stats"} tabindex="3">Stats</Link> : null }
               <Link href="/logout" tabindex="4">Log Out</Link>
             </div>
-            : null
+            :
+            <div class="nav-links flex-pull-right">
+              <Link href="/login" tabindex="4">Log In</Link>
+            </div>
           }
         </nav>
         <div class={backdropClass} onClick={() => this.toggleMenu()}></div>

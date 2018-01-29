@@ -24,6 +24,7 @@ export default class LeagueHome extends Component {
   componentDidMount() {
     WebSocketService.subscribe(MATCH_STARTED, this.onMatchStart);
     WebSocketService.subscribe(MATCH_FINISHED, this.onMatchFinish);
+    Rest.get('users/me').then(user => this.setState({ user }));
     this.getLeagueInfo().then(league => {
       this.getMostRecent();
       this.getLive();
@@ -78,9 +79,10 @@ export default class LeagueHome extends Component {
   };
 
   render() {
-    let { liveMatches, recentMatches, league } = this.state;
+    let { liveMatches, recentMatches, league, user } = this.state;
     return (
       <article class="main home league-home">
+        { user ? <h3>Admin privileges!</h3> : null }
         <section class="league-home-tabs">
           <SegmentedControl
             options={[
