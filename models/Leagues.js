@@ -36,6 +36,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: undefined
+    },
+    slug: {
+      field: 'slug',
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: undefined
     }
   }, {
     tableName: 'leagues',

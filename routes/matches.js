@@ -5,6 +5,7 @@ let Sports;
 let Players;
 let Persons;
 let Coaches;
+let Leagues;
 let TennisMatches;
 let FootballMatches;
 let BaseballMatches;
@@ -49,6 +50,7 @@ const getMatchModelIncludes = (sport) => {
 exports.init = (models, db, sendMsg, registerForMsg) => {
   Op = db.Op;
   Sports = models.Sports;
+  Leagues = models.Leagues;
   Players = models.Players;
   Persons = models.Persons;
   PingPongMatches = models.PingPongMatches;
@@ -58,15 +60,19 @@ exports.init = (models, db, sendMsg, registerForMsg) => {
 };
 
 exports.live = (req, res) => {
-  const leagueId = req.params.leagueId;
+  const leagueSlug = req.params.leagueSlug;
   const sportId = req.params.sportId;
   let sport;
   let Model;
-  return getSportMatchModel(sportId).then(results => {
-    sport = results[0];
-    Model = results[1];
+  return Promise.all([
+    Leagues.findOne({ where: { slug: leagueSlug }}),
+    getSportMatchModel(sportId)
+  ]).then(results => {
+    let league = results[0];
+    sport = results[1][0];
+    Model = results[1][1];
     return Model.findAll({
-      where: { finished: 0, leagueId: leagueId },
+      where: { finished: 0, leagueId: league.id },
       order: [['startTime', 'ASC']],
       include: getMatchModelIncludes(sport)
     });
@@ -76,15 +82,19 @@ exports.live = (req, res) => {
 };
 
 exports.recent = (req, res) => {
-  const leagueId = req.params.leagueId;
+  const leagueSlug = req.params.leagueSlug;
   const sportId = req.params.sportId;
   let sport;
   let Model;
-  return getSportMatchModel(sportId).then(results => {
-    sport = results[0];
-    Model = results[1];
+  return Promise.all([
+    Leagues.findOne({ where: { slug: leagueSlug }}),
+    getSportMatchModel(sportId)
+  ]).then(results => {
+    let league = results[0];
+    sport = results[1][0];
+    Model = results[1][1];
     return Model.findAll({
-      where: { leagueId: leagueId, finished: 1 },
+      where: { leagueId: league.id, finished: 1 },
       order: [['finishTime', 'DESC']],
       limit: req.params.count !== null && req.params.count !== undefined ? req.params.count : 25,
       include: getMatchModelIncludes(sport)

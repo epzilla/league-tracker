@@ -25,14 +25,16 @@ export default class LeagueHome extends Component {
     WebSocketService.subscribe(MATCH_STARTED, this.onMatchStart);
     WebSocketService.subscribe(MATCH_FINISHED, this.onMatchFinish);
     Rest.get('users/me').then(user => this.setState({ user }));
-    this.getLeagueInfo().then(league => {
-      this.getMostRecent();
-      this.getLive();
-      // this.getStandings();
-      if (this.props.setLeague) {
-        this.props.setLeague(league);
-      }
-    })
+    Rest.get(`leagues/${this.props.leagueSlug}`).then(league => {
+      this.setState({ league }, () => {
+        this.getMostRecent();
+        this.getLive();
+        // this.getStandings();
+        if (this.props.setLeague) {
+          this.props.setLeague(league);
+        }
+        });
+    });
   }
 
   componentWillUnmount() {
@@ -42,22 +44,22 @@ export default class LeagueHome extends Component {
   }
 
   getLeagueInfo = () => {
-    return Rest.get(`leagues/${this.props.leagueId}`).then(league => {
+    return Rest.get(`leagues/${this.props.leagueSlug}`).then(league => {
       this.setState({ league });
       return league;
     });
   };
 
   getStandings = () => {
-    Rest.get(`standings/${this.props.leagueId}`).then(standings => this.setState({ standings }));
+    Rest.get(`standings/${this.props.leagueSlug}`).then(standings => this.setState({ standings }));
   };
 
   getMostRecent = () => {
-    Rest.get(`matches/recent/${this.state.league.sport.id}/${this.props.leagueId}`).then(recentMatches => this.setState({ recentMatches }));
+    Rest.get(`matches/recent/${this.state.league.sport.id}/${this.props.leagueSlug}`).then(recentMatches => this.setState({ recentMatches }));
   };
 
   getLive = () => {
-    Rest.get(`matches/live/${this.state.league.sport.id}/${this.props.leagueId}`).then(liveMatches => this.setState({ liveMatches }));
+    Rest.get(`matches/live/${this.state.league.sport.id}/${this.props.leagueSlug}`).then(liveMatches => this.setState({ liveMatches }));
   };
 
   onMatchStart = (match) => {

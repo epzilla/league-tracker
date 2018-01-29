@@ -4,3 +4,50 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+
+.leagues-list {
+  li {
+    background-color: white;
+    height: 6rem;
+    min-width: 300px;
+    border: 1px solid var(--colorDefaultText);
+    border-bottom: none;
+
+    &:last-of-type {
+      border-bottom: 1px solid var(--colorDefaultText);
+    }
+
+    a {
+      color: var(--colorDefaultText);
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 1rem;
+      font-size: 1.5rem;
+      flex: 1;
+      text-decoration: none;
+
+      &:visited {
+        color: var(--colorDefaultText);
+      }
+
+      &:hover {
+        background-color: #fafafa;
+      }
+    }
+
+    .sport-icon {
+      display: block;
+      height: 4rem;
+      width: 4rem;
+      border: 1px solid var(--colorDefaultText);
+      border-radius: 50%;
+      margin-right: 1rem;
+
+      background-color: var(--scoreFlashColor);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 50px 50px;
+    }
+  }
+}

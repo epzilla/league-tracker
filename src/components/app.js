@@ -199,9 +199,9 @@ export default class App extends Component {
 					<Login path="/login" config={this.config} />
           <Logout path="/logout" config={this.config} callback={() => this.onLogout()} />
           <Signup path="/sign-up" config={this.config} />
-          <LeagueHome path="/leagues/:leagueId" config={this.config} postAlert={this.postAlert} setLeague={this.setLeague} />
-          <LeagueStats path="leagues/:leagueId/stats" config={this.config} />
-          <LeagueSchedule path="leagues/:leagueId/schedule" config={this.config} />
+          <LeagueHome path="/leagues/:leagueSlug" config={this.config} postAlert={this.postAlert} setLeague={this.setLeague} />
+          <LeagueStats path="leagues/:leagueSlug/stats" config={this.config} />
+          <LeagueSchedule path="leagues/:leagueSlug/schedule" config={this.config} />
           <TeamStats path="teams/:teamId/stats" config={this.config} />
           <TeamSchedule path="teams/:teamId/schedule" config={this.config} />
           <Home path="/" config={this.config} postAlert={this.postAlert} user={this.state.user} />

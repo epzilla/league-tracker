@@ -30,10 +30,10 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   app.post('/api/players', players.create);
 
   // Matches/Games
-  app.get('/api/matches/recent/:sportId/:leagueId', matches.recent);
-  app.get('/api/matches/live/:sportId/:leagueId', matches.live);
-  app.get('/api/standings/:leagueId', divisionStandings.get);
-  app.get('/api/leagues/:leagueId', leagues.get);
+  app.get('/api/matches/recent/:sportId/:leagueSlug', matches.recent);
+  app.get('/api/matches/live/:sportId/:leagueSlug', matches.live);
+  app.get('/api/standings/:leagueSlug', divisionStandings.get);
+  app.get('/api/leagues/:leagueSlug', leagues.get);
   app.get('/api/users/:userId', users.get);
   app.get('/api/users/:userId/leagues', users.getLeaguesForUser);
 

@@ -6,10 +6,10 @@ module.exports = function (models) {
   models['Competitions'].belongsTo(models['Leagues'], { as: 'league', foreignKey: 'league_id'});
   models['Divisions'].belongsTo(models['Leagues'], { as: 'league', foreignKey: 'league_id'});
   models['DivisionStandings'].belongsTo(models['Divisions'], { foreignKey: 'division_id'});
-  models['LeagueAdmins'].belongsTo(models['Users'], { foreignKey: 'user_id'});
-  models['LeagueAdmins'].belongsTo(models['Leagues'], { foreignKey: 'league_id'});
-  models['LeagueScorekeepers'].belongsTo(models['Users'], { foreignKey: 'user_id'});
-  models['LeagueScorekeepers'].belongsTo(models['Leagues'], { foreignKey: 'league_id'});
+  models['LeagueAdmins'].belongsTo(models['Users'], { foreignKey: 'user_id', as: 'user'});
+  models['LeagueAdmins'].belongsTo(models['Leagues'], { foreignKey: 'league_id', as: 'league'});
+  models['LeagueScorekeepers'].belongsTo(models['Users'], { foreignKey: 'user_id', as: 'user'});
+  models['LeagueScorekeepers'].belongsTo(models['Leagues'], { foreignKey: 'league_id', as: 'league'});
   models['Users'].belongsToMany(models['Leagues'], {through: 'user_leagues', as: 'leagues', foreignKey: 'user_id'});
   models['Leagues'].belongsToMany(models['Users'], {through: 'user_leagues', as: 'users', foreignKey: 'league_id'});
 

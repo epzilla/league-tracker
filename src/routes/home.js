@@ -2,6 +2,7 @@ import { Component } from 'preact';
 import Rest from '../lib/rest-service';
 import { Link } from 'preact-router/match';
 import { route } from 'preact-router';
+import LeagueLink from '../components/leagueLink';
 import LocalStorageService from '../lib/local-storage-service';
 import WebSocketService from '../lib/websocket-service';
 
@@ -38,7 +39,9 @@ export default class Home extends Component {
           this.state.leagues ?
           <section class="my-leagues">
             <h2>My Leagues</h2>
-            { this.state.leagues.map(league => <Link href={`/leagues/${league.id}`}>{ league.name }</Link>) }
+            <ul class="leagues-list">
+              { this.state.leagues.map(l => <li><LeagueLink league={l} /></li>) }
+            </ul>
           </section>
           : null
         }

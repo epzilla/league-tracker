@@ -44,10 +44,20 @@ exports.get = (req, res) => {
 
 exports.getLeaguesForUser = (req, res) => {
   return Promise.all([
-    LeagueAdmins.findAll({ where: { userId: req.params.userId }, include: [{all: true}] }),
-    LeagueScorekeepers.findAll({ where: { userId: req.params.userId }, include: [{all: true}] })
+    LeagueAdmins.findAll({ where: { userId: req.params.userId }, include: [
+      {model: Leagues, as: 'league', include: [
+        {model: Competitions, as: 'competitions'},
+        {model: Sports, as: 'sport'}
+      ]}
+    ] }),
+    LeagueScorekeepers.findAll({ where: { userId: req.params.userId }, include: [
+      {model: Leagues, as: 'league', include: [
+        {model: Competitions, as: 'competitions'},
+        {model: Sports, as: 'sport'}
+      ]}
+    ] })
   ]).then(results => {
-    let leagues = [...results[0], ...results[1]].map(l => l.League);
+    let leagues = [...results[0], ...results[1]].map(l => l.league);
     return res.json(leagues);
   }).catch(err => {
     return res.status(500).send(err);
