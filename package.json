@@ -10,7 +10,7 @@
     "dev": "preact watch --template src/index.html",
     "lint": "eslint src",
     "backend": "node .",
-    "backend-debug": "node --inspect ."
+    "backend-debug": "nodemon -e js --inspect --watch models --watch routes"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "eslint": "^4.9.0",
     "eslint-config-synacor": "^2.0.2",
     "if-env": "^1.0.0",
+    "nodemon": "^1.14.11",
     "preact-cli": "^2.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1"
