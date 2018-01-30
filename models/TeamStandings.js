@@ -47,14 +47,20 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       defaultValue: undefined
     },
-    otWins: {
-      field: 'ot_wins',
+    otLosses: {
+      field: 'ot_losses',
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: undefined
     },
     winPct: {
       field: 'win_pct',
+      type: DataTypes.REAL,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    points: {
+      field: 'points',
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: undefined
@@ -79,7 +85,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     divWinPct: {
       field: 'div_win_pct',
-      type: DataTypes.INTEGER,
+      type: DataTypes.REAL,
       allowNull: true,
       defaultValue: undefined
     },
@@ -103,7 +109,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     subdivWinPct: {
       field: 'subdiv_win_pct',
-      type: DataTypes.INTEGER,
+      type: DataTypes.REAL,
       allowNull: true,
       defaultValue: undefined
     },
@@ -114,7 +120,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: undefined
     }
   }, {
-    tableName: 'team_standing',
+    tableName: 'team_standings',
     timestamps: false,
     freezeTableName: true
   });

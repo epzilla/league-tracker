@@ -5,7 +5,9 @@ module.exports = function (models) {
   models['Teams'].belongsTo(models['Leagues'], { foreignKey: 'league_id'});
   models['Competitions'].belongsTo(models['Leagues'], { as: 'league', foreignKey: 'league_id'});
   models['Divisions'].belongsTo(models['Leagues'], { as: 'league', foreignKey: 'league_id'});
-  models['DivisionStandings'].belongsTo(models['Divisions'], { foreignKey: 'division_id'});
+  // models['DivisionStandings'].belongsTo(models['Divisions'], { foreignKey: 'division_id'});
+  models['TeamStandings'].belongsTo(models['Teams'], { as: 'team', foreignKey: 'team_id'});
+  models['Teams'].belongsTo(models['Leagues'], { foreignKey: 'league_id'});
   models['LeagueAdmins'].belongsTo(models['Users'], { foreignKey: 'user_id', as: 'user'});
   models['LeagueAdmins'].belongsTo(models['Leagues'], { foreignKey: 'league_id', as: 'league'});
   models['LeagueScorekeepers'].belongsTo(models['Users'], { foreignKey: 'user_id', as: 'user'});

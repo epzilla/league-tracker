@@ -29,7 +29,7 @@ export default class LeagueHome extends Component {
       this.setState({ league }, () => {
         this.getMostRecent();
         this.getLive();
-        // this.getStandings();
+        this.getStandings();
         if (this.props.setLeague) {
           this.props.setLeague(league);
         }
@@ -81,7 +81,7 @@ export default class LeagueHome extends Component {
   };
 
   render() {
-    let { liveMatches, recentMatches, league, user } = this.state;
+    let { liveMatches, recentMatches, league, user, standings } = this.state;
     return (
       <article class="main home league-home">
         {/* user ? <h3>Admin privileges!</h3> : null */}
@@ -100,7 +100,7 @@ export default class LeagueHome extends Component {
           { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} /> : null }
         </section>
         <section class={`league-home-col league-main ${this.state.tab === 0 ? 'show' : 'hide'}`}>
-          <LeagueStandings league={league} />
+          <LeagueStandings league={league} standings={standings} />
         </section>
         <section class={`league-home-col hide-large league-main ${this.state.tab === 1 ? 'show' : 'hide'}`}>
           { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} /> : null }

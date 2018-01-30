@@ -9,14 +9,32 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: undefined,
       primaryKey: true
     },
-    placeName: {
-      field: 'place_name',
+    title: {
+      field: 'title',
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    code: {
+      field: 'code',
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: undefined
     },
     nickname: {
       field: 'nickname',
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    short_name: {
+      field: 'short_name',
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    shorter_name: {
+      field: 'shorter_name',
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: undefined
@@ -41,12 +59,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     tertiaryColor: {
       field: 'tertiary_color',
-      type: DataTypes.STRING,
-      allowNull: true,
-      defaultValue: undefined
-    },
-    otherColors: {
-      field: 'other_colors',
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: undefined
