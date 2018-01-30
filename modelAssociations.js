@@ -13,7 +13,7 @@ module.exports = function (models) {
   const Rosters = models.Rosters;
   const Sports = models.Sports;
   const Teams = models.Teams;
-  const TeamStandings = models.TeamStandings;
+  const TeamOrPlayerStandings = models.TeamOrPlayerStandings;
   const Users = models.Users;
 
   Leagues.belongsTo(Sports, { as: 'sport', foreignKey: 'sport_id'});
@@ -27,12 +27,13 @@ module.exports = function (models) {
   Teams.belongsTo(Leagues, { as: 'league', foreignKey: 'league_id'});
 
   Competitions.belongsTo(Leagues, { as: 'league', foreignKey: 'league_id'});
-  Competitions.hasMany(DivisionStandings, { as: 'divisionStandings', foreignKey: 'competition_id'});
+  Competitions.hasMany(DivisionStandings, { as: 'divisionStandings', foreignKey: 'competition_id', sourceKey: 'id'});
   DivisionStandings.belongsTo(Divisions, { as: 'division', foreignKey: 'division_id'});
-  DivisionStandings.hasMany(TeamStandings, { as: 'teamStandings', foreignKey: 'division_standings_id'});
-  TeamStandings.belongsTo(Teams, { as: 'team', foreignKey: 'team_id'});
+  DivisionStandings.hasMany(TeamOrPlayerStandings, { as: 'teamOrPlayerStandings', foreignKey: 'division_standings_id', sourceKey: 'id'});
+  TeamOrPlayerStandings.belongsTo(Teams, { as: 'team', foreignKey: 'team_id'});
+  TeamOrPlayerStandings.belongsTo(Players, { as: 'player', foreignKey: 'player_id'});
 
-  Teams.hasMany(Rosters, { as: 'roster', foreignKey: 'team_id'});
+  Teams.hasMany(Rosters, { as: 'roster', foreignKey: 'team_id', sourceKey: 'id'});
   Rosters.belongsTo(Teams, { as: 'team', foreignKey: 'team_id'});
   Players.belongsToMany(Rosters, {through: 'roster_players', as: 'rosters', foreignKey: 'player_id'});
   Rosters.belongsToMany(Players, {through: 'roster_players', as: 'players', foreignKey: 'roster_id'});

@@ -26,9 +26,9 @@ export default class LeagueStandings extends Component {
       return (
         <div class="league-standings">
           {
-            current[0].map(s => {
+            divisionStandings.map(standing => {
               <section class="division-standings">
-                <h2 class="primary-text">{ s.division.name } Standings</h2>
+                <h2 class="primary-text">{ standing.division.name } Standings</h2>
                 <table>
                   <thead>
                     <tr>
@@ -42,7 +42,7 @@ export default class LeagueStandings extends Component {
                   </thead>
                   <tbody>
                     {
-                      s.teamStandings.map(t => {
+                      standing.teamOrPlayerStandings.map(t => {
                         return (
                           <tr>
                             <td>{t.standing}</td>

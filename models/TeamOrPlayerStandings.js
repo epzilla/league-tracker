@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('TeamStanding', {
+  return sequelize.define('TeamOrPlayerStanding', {
     id: {
       field: 'id',
       type: DataTypes.INTEGER,
@@ -28,6 +28,22 @@ module.exports = function(sequelize, DataTypes) {
         model: 'teams',
         key: 'id'
       }
+    },
+    playerId: {
+      field: 'player_id',
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: undefined,
+      references: {
+        model: 'players',
+        key: 'id'
+      }
+    },
+    isTeam: {
+      field: 'is_team',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 1
     },
     wins: {
       field: 'wins',
@@ -120,7 +136,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: undefined
     }
   }, {
-    tableName: 'team_standings',
+    tableName: 'team_or_player_standings',
     timestamps: false,
     freezeTableName: true
   });

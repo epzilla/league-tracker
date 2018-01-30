@@ -9,8 +9,8 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
       primaryKey: true
     },
-    leagueId: {
-      field: 'league_id',
+    competitionId: {
+      field: 'competition_id',
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0

@@ -1,26 +1,29 @@
 const crypto = require('crypto');
 const constants = require('../constants');
-let Op;
-let Sports;
-let Players;
-let Persons;
-let Coaches;
-let Leagues;
-let TennisMatches;
-let FootballMatches;
 let BaseballMatches;
 let BasketballMatches;
-let SoccerMatches;
-let HockeyMatches;
+let Coaches;
+let Competitions;
 let FoosballMatches;
-let PingPongMatches;
+let FootballMatches;
+let HockeyMatches;
+let Leagues;
+let Op;
+let Persons;
 let PingPongGames;
-let sequelize;
+let PingPongMatches;
+let Players;
 let sendSocketMsg;
+let sequelize;
+let SoccerMatches;
+let Sports;
+let TennisMatches;
 
 const getSportMatchModel = (id) => {
   return Sports.findById(id).then(sport => {
     switch (sport.name) {
+      case 'Soccer':
+        return [sport, SoccerMatches];
       case 'Ping Pong':
       case 'Table Tennis':
         return [sport, PingPongMatches];
@@ -32,6 +35,11 @@ const getSportMatchModel = (id) => {
 
 const getMatchModelIncludes = (sport) => {
   switch (sport.name) {
+    case 'Soccer':
+      return [
+        {model: SoccerMatches, as: 'match'},
+        {model: Teams, as: 'teams'}
+      ];
     case 'Ping Pong':
     case 'Table Tennis':
       return [
@@ -47,32 +55,42 @@ const getMatchModelIncludes = (sport) => {
   }
 };
 
-exports.init = (models, db, sendMsg, registerForMsg) => {
-  Op = db.Op;
-  Sports = models.Sports;
-  Leagues = models.Leagues;
-  Players = models.Players;
-  Persons = models.Persons;
-  PingPongMatches = models.PingPongMatches;
-  PingPongGames = models.PingPongGames;
-  sequelize = db;
-  sendSocketMsg = sendMsg;
-};
-
-exports.live = (req, res) => {
+const getModelsFromReq = (req) => {
   const leagueSlug = req.params.leagueSlug;
   const sportId = req.params.sportId;
+  let competition;
   let sport;
   let Model;
   return Promise.all([
-    Leagues.findOne({ where: { slug: leagueSlug }}),
+    Leagues.findOne({ where: { slug: leagueSlug }, include: [{ model: Competitions, as: 'competitions' }]}),
     getSportMatchModel(sportId)
   ]).then(results => {
     let league = results[0];
+    let competitions = league.competitions;
+    competition = competitions.find(c => !!c.current);
     sport = results[1][0];
     Model = results[1][1];
+    return { competition, sport, Model };
+  });
+};
+
+exports.init = (models, db, sendMsg, registerForMsg) => {
+  Op = db.Op;
+  sequelize = db;
+  sendSocketMsg = sendMsg;
+  Competitions = models.Competitions;
+  Leagues = models.Leagues;
+  Persons = models.Persons;
+  PingPongGames = models.PingPongGames;
+  PingPongMatches = models.PingPongMatches;
+  Players = models.Players;
+  Sports = models.Sports;
+};
+
+exports.live = (req, res) => {
+  return getModelsFromReq(req).then(({ competition, sport, Model }) => {
     return Model.findAll({
-      where: { finished: 0, leagueId: league.id },
+      where: { finished: 0, competitionId: competition.id },
       order: [['startTime', 'ASC']],
       include: getMatchModelIncludes(sport)
     });
@@ -82,19 +100,9 @@ exports.live = (req, res) => {
 };
 
 exports.recent = (req, res) => {
-  const leagueSlug = req.params.leagueSlug;
-  const sportId = req.params.sportId;
-  let sport;
-  let Model;
-  return Promise.all([
-    Leagues.findOne({ where: { slug: leagueSlug }}),
-    getSportMatchModel(sportId)
-  ]).then(results => {
-    let league = results[0];
-    sport = results[1][0];
-    Model = results[1][1];
+  return getModelsFromReq(req).then(({ competition, sport, Model }) => {
     return Model.findAll({
-      where: { leagueId: league.id, finished: 1 },
+      where: { competitionId: competition.id, finished: 1 },
       order: [['finishTime', 'DESC']],
       limit: req.params.count !== null && req.params.count !== undefined ? req.params.count : 25,
       include: getMatchModelIncludes(sport)
@@ -105,19 +113,9 @@ exports.recent = (req, res) => {
 };
 
 exports.upcoming = (req, res) => {
-  const leagueSlug = req.params.leagueSlug;
-  const sportId = req.params.sportId;
-  let sport;
-  let Model;
-  return Promise.all([
-    Leagues.findOne({ where: { slug: leagueSlug }}),
-    getSportMatchModel(sportId)
-  ]).then(results => {
-    let league = results[0];
-    sport = results[1][0];
-    Model = results[1][1];
+  return getModelsFromReq(req).then(({ competition, sport, Model }) => {
     return Model.findAll({
-      where: { started: 0, leagueId: league.id },
+      where: { started: 0, competitionId: competition.id },
       order: [['startTime', 'ASC']],
       include: getMatchModelIncludes(sport)
     });

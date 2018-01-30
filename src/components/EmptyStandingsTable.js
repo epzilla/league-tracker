@@ -18,7 +18,7 @@ const EmptyStandingsTable = ({ league }) => {
   //           </thead>
   //           <tbody>
   //             {
-  //               s.teamStandings.map(t => {
+  //               s.teamOrPlayerStandings.map(t => {
   //                 return (
   //                   <tr>
   //                     <td>{t.standing}</td>
