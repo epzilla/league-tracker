@@ -7,14 +7,17 @@ module.exports = function (models) {
   const Leagues = models.Leagues;
   const LeagueScorekeepers = models.LeagueScorekeepers;
   const Persons = models.Persons;
-  const PingPongGames = models.PingPongGames;
-  const PingPongMatches = models.PingPongMatches;
   const Players = models.Players;
   const Rosters = models.Rosters;
   const Sports = models.Sports;
   const Teams = models.Teams;
   const TeamOrPlayerStandings = models.TeamOrPlayerStandings;
   const Users = models.Users;
+
+  // Sport-specific
+  const PingPongGames = models.PingPongGames;
+  const PingPongMatches = models.PingPongMatches;
+  const SoccerMatches = models.SoccerMatches;
 
   Leagues.belongsTo(Sports, { as: 'sport', foreignKey: 'sport_id'});
   Leagues.hasMany(Competitions, { as: 'competitions', foreignKey: 'league_id', sourceKey: 'id'});
@@ -57,4 +60,7 @@ module.exports = function (models) {
   // Matches/Sets/Games
   PingPongMatches.belongsToMany(PingPongGames, {through: 'ping_pong_match_games', as: 'games', foreignKey: 'match_id'});
   PingPongGames.belongsToMany(PingPongMatches, {through: 'ping_pong_match_games', as: 'match', foreignKey: 'game_id'});
+
+  SoccerMatches.belongsTo(Teams, { as: 'team1', sourceKey: 'id', foreignKey: 'team1_id'});
+  SoccerMatches.belongsTo(Teams, { as: 'team2', sourceKey: 'id', foreignKey: 'team2_id'});
 };

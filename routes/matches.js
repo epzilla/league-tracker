@@ -1,5 +1,9 @@
 const crypto = require('crypto');
 const constants = require('../constants');
+let Op;
+let sendSocketMsg;
+let sequelize;
+
 let BaseballMatches;
 let BasketballMatches;
 let Coaches;
@@ -8,15 +12,13 @@ let FoosballMatches;
 let FootballMatches;
 let HockeyMatches;
 let Leagues;
-let Op;
 let Persons;
 let PingPongGames;
 let PingPongMatches;
 let Players;
-let sendSocketMsg;
-let sequelize;
 let SoccerMatches;
 let Sports;
+let Teams;
 let TennisMatches;
 
 const getSportMatchModel = (id) => {
@@ -37,8 +39,8 @@ const getMatchModelIncludes = (sport) => {
   switch (sport.name) {
     case 'Soccer':
       return [
-        {model: SoccerMatches, as: 'match'},
-        {model: Teams, as: 'teams'}
+        {model: Teams, as: 'team1'},
+        {model: Teams, as: 'team2'}
       ];
     case 'Ping Pong':
     case 'Table Tennis':
@@ -78,14 +80,38 @@ exports.init = (models, db, sendMsg, registerForMsg) => {
   Op = db.Op;
   sequelize = db;
   sendSocketMsg = sendMsg;
+  BaseballMatches = models.BaseballMatches;
+  BasketballMatches = models.BasketballMatches;
+  Coaches = models.Coaches;
   Competitions = models.Competitions;
+  FoosballMatches = models.FoosballMatches;
+  FootballMatches = models.FootballMatches;
+  HockeyMatches = models.HockeyMatches;
   Leagues = models.Leagues;
   Persons = models.Persons;
   PingPongGames = models.PingPongGames;
   PingPongMatches = models.PingPongMatches;
   Players = models.Players;
+  SoccerMatches = models.SoccerMatches;
   Sports = models.Sports;
+  Teams = models.Teams;
+  TennisMatches = models.TennisMatches;
 };
+
+exports.allForCompetition = (req, res) => {
+  return getModelsFromReq(req).then(({ competition, sport, Model }) => {
+    return Model.findAll({
+      where: { competitionId: competition.id },
+      order: [['startTime', 'ASC']],
+      include: getMatchModelIncludes(sport)
+    });
+  }).then(matches => {
+    return res.json(matches || []);
+  }).catch(e => {
+    return res.status(500).send(e);
+  });
+};
+
 
 exports.live = (req, res) => {
   return getModelsFromReq(req).then(({ competition, sport, Model }) => {
