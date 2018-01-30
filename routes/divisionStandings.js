@@ -34,7 +34,7 @@ exports.getLeagueWithStandings = (req, res) => {
         { model: Divisions, as: 'division'},
         { model: TeamOrPlayerStandings, as: 'teamOrPlayerStandings', include: [
           { model: Teams, as: 'team'},
-          { model: Players, as: 'player'}
+          { model: Players, as: 'player', include: [{ all: true }]}
         ]}
       ]}
     ]}

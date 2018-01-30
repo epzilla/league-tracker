@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: undefined,
+      autoIncrement: true,
       primaryKey: true
     },
     divisionStandingsId: {
@@ -131,6 +132,54 @@ module.exports = function(sequelize, DataTypes) {
     },
     standing: {
       field: 'standing',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    goalsFor: {
+      field: 'goals_for',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    goalsAgainst: {
+      field: 'goals_against',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    gamesWon: {
+      field: 'games_won',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    gamesLost: {
+      field: 'games_lost',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    setsWon: {
+      field: 'sets_won',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    setsLost: {
+      field: 'sets_lost',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    pointsWon: {
+      field: 'points_won',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: undefined
+    },
+    pointsLost: {
+      field: 'points_lost',
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: undefined

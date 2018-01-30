@@ -1,5 +1,7 @@
 import { Component } from 'preact';
 import EmptyStandingsTable from './EmptyStandingsTable';
+import PingPongStandingsTable from './PingPongStandingsTable';
+import SoccerStandingsTable from './SoccerStandingsTable';
 
 export default class LeagueStandings extends Component {
   constructor(props) {
@@ -13,11 +15,23 @@ export default class LeagueStandings extends Component {
       if (competitions && competitions.length > 0) {
         const current = competitions.find(c => !!c.current);
         if (current && current.divisionStandings && current.divisionStandings.length > 0) {
-          this.setState({ divisionStandings: current.divisionStandings });
+          let standings = current.divisionStandings.map(s => {
+            s.teamOrPlayerStandings.sort((a, b) => a.standing - b.standing);
+            return s;
+          });
+          this.setState({ divisionStandings: standings });
         }
       }
     }
   }
+
+  getName = (standing, teamOrPlayer) => {
+    if (teamOrPlayer.isTeam) {
+      return teamOrPlayer.team.title;
+    }
+
+    return `${teamOrPlayer.player.person.fname} ${teamOrPlayer.player.person.lname}`;
+  };
 
   render() {
     const { divisionStandings } = this.state;
@@ -26,39 +40,16 @@ export default class LeagueStandings extends Component {
       return (
         <div class="league-standings">
           {
+            this.props.sport ?
             divisionStandings.map(standing => {
-              <section class="division-standings">
-                <h2 class="primary-text">{ standing.division.name } Standings</h2>
-                <table>
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>Team</th>
-                      <th>W</th>
-                      <th>D</th>
-                      <th>L</th>
-                      <th>P</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      standing.teamOrPlayerStandings.map(t => {
-                        return (
-                          <tr>
-                            <td>{t.standing}</td>
-                            <td>{t.team.title}</td>
-                            <td>{t.wins}</td>
-                            <td>{t.draws}</td>
-                            <td>{t.losses}</td>
-                            <td>{t.points}</td>
-                          </tr>
-                        )
-                      })
-                    }
-                  </tbody>
-                </table>
-              </section>
+              switch (this.props.sport.name) {
+                case 'Soccer':
+                  return <SoccerStandingsTable standings={standing} />;
+                default:
+                  return <PingPongStandingsTable standings={standing} />;
+              }
             })
+            : null
           }
         </div>
       );

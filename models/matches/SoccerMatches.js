@@ -45,6 +45,12 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       defaultValue: undefined
     },
+    finishTime: {
+      field: 'finish_time',
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: undefined
+    },
     started: {
       field: 'started',
       type: DataTypes.INTEGER,

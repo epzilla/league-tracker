@@ -1,4 +1,5 @@
 const EmptyStandingsTable = ({ league }) => {
+  console.log(league);
   return (<h2>Heyoooo</h2>);
   // if (!league.divisions || league.divisions.length === 0) {
   //   return (

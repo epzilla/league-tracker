@@ -143,6 +143,7 @@ exports.upcoming = (req, res) => {
     return Model.findAll({
       where: { started: 0, competitionId: competition.id },
       order: [['startTime', 'ASC']],
+      limit: req.query.count !== null && req.query.count !== undefined ? req.query.count : 25,
       include: getMatchModelIncludes(sport)
     });
   }).then(matches => {

@@ -15,6 +15,16 @@ export const calculateExpectedPointsPerMatch = (match) => {
   return expectedPerGame * Math.ceil((match.bestOf + Math.ceil(match.bestOf / 2)) / 2);
 };
 
+export const getScoreHeaderLine = (match, game) => {
+  if (game.score1 > game.score2) {
+    let teamName = match.doubles ? `${match.player1Lname}/${match.partner1Lname}` : match.player1Lname;
+    return `${game.score1}-${game.score2} (F), ${teamName}`;
+  } else {
+    let teamName = match.doubles ? `${match.player2Lname}/${match.partner2Lname}` : match.player2Lname;
+    return `${game.score2}-${game.score1} (F), ${teamName}`;
+  }
+};
+
 export const getTeamName = (match, teamNum) => {
   let player = teamNum === 1 ? match.players.find(p => p.id === match.player1Id) : match.players.find(p => p.id === match.player2Id);
 

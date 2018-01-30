@@ -22,7 +22,7 @@ export default class ScheduleList extends Component {
       <div class="league-standings">
         <div class="match-list">
           <h3 class="align-center">Schedule</h3>
-          { this.state.matches.length > 0 ? <MatchList upcoming matches={this.state.matches} /> : null }
+          { this.state.matches.length > 0 ? <MatchList upcoming matches={this.state.matches} sport={this.props.league.sport} /> : null }
         </div>
       </div>
     );

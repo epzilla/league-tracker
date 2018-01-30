@@ -51,7 +51,9 @@ export default class LeagueHome extends Component {
   };
 
   getStandings = () => {
-    Rest.get(`standings/${this.props.leagueSlug}`).then(standings => this.setState({ standings }));
+    Rest.get(`standings/${this.props.leagueSlug}`).then(standings => {
+      this.setState({ standings });
+    });
   };
 
   getMostRecent = () => {
@@ -96,15 +98,15 @@ export default class LeagueHome extends Component {
           />
         </section>
         <section class="league-home-col league-left-sidebar">
-          { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} /> : null }
-          { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} /> : null }
+          { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} sport={league.sport} /> : null }
+          { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} sport={league.sport} /> : null }
         </section>
         <section class={`league-home-col league-main ${this.state.tab === 0 ? 'show' : 'hide'}`}>
-          <LeagueStandings league={league} standings={standings} />
+          <LeagueStandings league={league} standings={standings} sport={league && league.sport ? league.sport : null} />
         </section>
         <section class={`league-home-col hide-large league-main ${this.state.tab === 1 ? 'show' : 'hide'}`}>
-          { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} /> : null }
-          { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} /> : null }
+          { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} sport={league.sport} /> : null }
+          { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} sport={league.sport} /> : null }
           <ScheduleList league={league} upcoming={true} />
         </section>
         <section class="league-home-col league-right-sidebar">
