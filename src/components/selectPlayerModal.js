@@ -1,7 +1,7 @@
-import SelectList from './selectList';
 import CSSTransitionGroup from 'preact-css-transition-group';
 import { Link } from 'preact-router/match';
-import Avatar from './avatar';
+import Avatar from './Avatar';
+import SelectList from './SelectList';
 
 const renderPlayerListItem = (player, highlighted) => {
   return (

@@ -1,10 +1,10 @@
 import { Component } from 'preact';
-import Rest from '../lib/rest-service';
 import { Link } from 'preact-router/match';
 import { route } from 'preact-router';
-import LeagueLink from '../components/leagueLink';
+import Rest from '../lib/rest-service';
 import LocalStorageService from '../lib/local-storage-service';
 import WebSocketService from '../lib/websocket-service';
+import LeagueLink from '../components/LeagueLink';
 
 export default class Home extends Component {
   constructor(props) {

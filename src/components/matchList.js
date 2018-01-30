@@ -1,5 +1,5 @@
 import { Component } from 'preact';
-import BoxScore from './boxScore';
+import BoxScore from './BoxScore';
 
 export default class MatchList extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import { Component } from 'preact';
-import MatchList from '../components/matchList';
 import Rest from '../lib/rest-service';
+import MatchList from '../components/MatchList';
 
 export default class ScheduleList extends Component {
   constructor(props) {

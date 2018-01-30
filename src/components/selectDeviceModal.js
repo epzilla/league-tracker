@@ -1,9 +1,9 @@
 import { Component } from 'preact';
 import { Link } from 'preact-router/match';
-import { DEVICE_TYPES, NO_DEVICES_SELECTED_ERROR } from '../lib/constants';
 import CSSTransitionGroup from 'preact-css-transition-group';
-import DeviceIcon from './deviceIcon';
-import SelectList from './selectList';
+import { DEVICE_TYPES, NO_DEVICES_SELECTED_ERROR } from '../lib/constants';
+import DeviceIcon from './DeviceIcon';
+import SelectList from './SelectList';
 
 export default class SelectDeviceModal extends Component {
   constructor(props) {

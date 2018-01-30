@@ -1,7 +1,7 @@
-import * as Constants from '../lib/constants';
-import { getBestGuessDevice } from '../lib/helpers';
 import { route } from 'preact-router';
 import CSSTransitionGroup from 'preact-css-transition-group';
+import * as Constants from '../lib/constants';
+import { getBestGuessDevice } from '../lib/helpers';
 
 const goToHomeScreen = (dismiss) => {
   route('/');

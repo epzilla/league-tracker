@@ -1,5 +1,5 @@
 import { DEVICE_TYPES } from '../lib/constants';
-import DeviceIcon from './deviceIcon';
+import DeviceIcon from './DeviceIcon';
 
 const DeviceTypePicker = ({ callback, selectedType }) => {
   const keyup = (code, type) => {

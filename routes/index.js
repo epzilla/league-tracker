@@ -1,6 +1,7 @@
 const players = require('./players');
 const matches = require('./matches');
 const divisionStandings = require('./divisionStandings');
+const rosters = require('./rosters');
 const leagues = require('./leagues');
 const users = require('./users');
 const session = require('./session');
@@ -13,6 +14,7 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   users.init(models);
   session.init(sequelize);
   divisionStandings.init(models, sequelize);
+  rosters.init(models, sequelize);
 
   app.use('/*', middleware.setUserCookie);
 
@@ -32,10 +34,13 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   app.get('/api/matches/recent/:sportId/:leagueSlug', matches.recent);
   app.get('/api/matches/live/:sportId/:leagueSlug', matches.live);
   app.get('/api/matches/upcoming/:sportId/:leagueSlug', matches.upcoming);
-  app.get('/api/standings/:leagueSlug', divisionStandings.getCurrentForLeague);
+  app.get('/api/standings/:leagueSlug', divisionStandings.getLeagueWithStandings);
   app.get('/api/leagues/:leagueSlug', leagues.get);
   app.get('/api/users/:userId', users.get);
   app.get('/api/users/:userId/leagues', users.getLeaguesForUser);
+
+  // Rosters
+  app.get('/api/rosters/:teamId/:competitionId', rosters.getByTeamCompetition);
 
   // app.get('/api/matches/by-players/:player1Id/:player2Id', matches.matchesByPlayers);
   // app.get('/api/matches/can-update-score/:deviceId', matches.canUpdate);

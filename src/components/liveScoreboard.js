@@ -1,7 +1,7 @@
 import { Component } from 'preact';
 import { SCORE_UPDATE, GAME_FINISHED, GAME_STARTED, MATCH_FINISHED } from '../lib/constants';
 import WebSocketService from '../lib/websocket-service';
-import BoxScore from './boxScore';
+import BoxScore from './BoxScore';
 
 export default class LiveScoreboard extends Component {
   constructor(props) {

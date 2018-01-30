@@ -9,8 +9,8 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: undefined,
       primaryKey: true
     },
-    divisonId: {
-      field: 'divison_id',
+    divisionId: {
+      field: 'division_id',
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: undefined,

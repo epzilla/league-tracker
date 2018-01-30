@@ -1,4 +1,4 @@
-import Avatar from './avatar';
+import Avatar from './Avatar';
 
 const PlayerSelectBlock = ({ doubles, isPartner, player, num, selectCallback, selectBtnText }) => {
   if (player) {

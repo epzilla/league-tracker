@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Rosters', {
+  return sequelize.define('Coaches', {
     id: {
       field: 'id',
       type: DataTypes.INTEGER,
@@ -9,26 +9,30 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: undefined,
       primaryKey: true
     },
-    teamId: {
-      field: 'team_id',
+    personId: {
+      field: 'person_id',
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: undefined
+      defaultValue: undefined,
+      references: {
+        model: 'persons',
+        key: 'id'
+      }
     },
-    competitionId: {
-      field: 'competition_id',
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: undefined
-    },
-    current: {
-      field: 'current',
+    headCoach: {
+      field: 'head_coach',
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: '1'
+      defaultValue: 1
+    },
+    asstCoach: {
+      field: 'asst_coach',
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     }
   }, {
-    tableName: 'rosters',
+    tableName: 'coaches',
     timestamps: false,
     freezeTableName: true
   });

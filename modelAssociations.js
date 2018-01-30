@@ -1,25 +1,59 @@
 module.exports = function (models) {
-  models['Leagues'].belongsTo(models['Sports'], { as: 'sport', foreignKey: 'sport_id'});
-  models['Leagues'].hasMany(models['Competitions'], { as: 'competitions', foreignKey: 'league_id', sourceKey: 'id'});
-  models['Players'].belongsTo(models['Persons'], { as: 'person', foreignKey: 'person_id'});
-  models['Teams'].belongsTo(models['Leagues'], { foreignKey: 'league_id'});
-  models['Competitions'].belongsTo(models['Leagues'], { as: 'league', foreignKey: 'league_id'});
-  models['Divisions'].belongsTo(models['Leagues'], { as: 'league', foreignKey: 'league_id'});
-  // models['DivisionStandings'].belongsTo(models['Divisions'], { foreignKey: 'division_id'});
-  models['TeamStandings'].belongsTo(models['Teams'], { as: 'team', foreignKey: 'team_id'});
-  models['Teams'].belongsTo(models['Leagues'], { foreignKey: 'league_id'});
-  models['LeagueAdmins'].belongsTo(models['Users'], { foreignKey: 'user_id', as: 'user'});
-  models['LeagueAdmins'].belongsTo(models['Leagues'], { foreignKey: 'league_id', as: 'league'});
-  models['LeagueScorekeepers'].belongsTo(models['Users'], { foreignKey: 'user_id', as: 'user'});
-  models['LeagueScorekeepers'].belongsTo(models['Leagues'], { foreignKey: 'league_id', as: 'league'});
-  models['Users'].belongsToMany(models['Leagues'], {through: 'user_leagues', as: 'leagues', foreignKey: 'user_id'});
-  models['Leagues'].belongsToMany(models['Users'], {through: 'user_leagues', as: 'users', foreignKey: 'league_id'});
+  const Coaches = models.Coaches;
+  const Competitions = models.Competitions;
+  const Divisions = models.Divisions;
+  const DivisionStandings = models.DivisionStandings;
+  const LeagueAdmins = models.LeagueAdmins;
+  const Leagues = models.Leagues;
+  const LeagueScorekeepers = models.LeagueScorekeepers;
+  const Persons = models.Persons;
+  const PingPongGames = models.PingPongGames;
+  const PingPongMatches = models.PingPongMatches;
+  const Players = models.Players;
+  const Rosters = models.Rosters;
+  const Sports = models.Sports;
+  const Teams = models.Teams;
+  const TeamStandings = models.TeamStandings;
+  const Users = models.Users;
+
+  Leagues.belongsTo(Sports, { as: 'sport', foreignKey: 'sport_id'});
+  Leagues.hasMany(Competitions, { as: 'competitions', foreignKey: 'league_id', sourceKey: 'id'});
+  Leagues.hasMany(Divisions, { as: 'divisions', foreignKey: 'league_id', sourceKey: 'id'});
+  Leagues.hasMany(Teams, { as: 'teams', foreignKey: 'league_id', sourceKey: 'id'});
+
+  Divisions.belongsTo(Leagues, { as: 'league', foreignKey: 'league_id'});
+  Divisions.hasMany(Teams, { as: 'teams', foreignKey: 'division_id', sourceKey: 'id'});
+
+  Teams.belongsTo(Leagues, { as: 'league', foreignKey: 'league_id'});
+
+  Competitions.belongsTo(Leagues, { as: 'league', foreignKey: 'league_id'});
+  Competitions.hasMany(DivisionStandings, { as: 'divisionStandings', foreignKey: 'competition_id'});
+  DivisionStandings.belongsTo(Divisions, { as: 'division', foreignKey: 'division_id'});
+  DivisionStandings.hasMany(TeamStandings, { as: 'teamStandings', foreignKey: 'division_standings_id'});
+  TeamStandings.belongsTo(Teams, { as: 'team', foreignKey: 'team_id'});
+
+  Teams.hasMany(Rosters, { as: 'roster', foreignKey: 'team_id'});
+  Rosters.belongsTo(Teams, { as: 'team', foreignKey: 'team_id'});
+  Players.belongsToMany(Rosters, {through: 'roster_players', as: 'rosters', foreignKey: 'player_id'});
+  Rosters.belongsToMany(Players, {through: 'roster_players', as: 'players', foreignKey: 'roster_id'});
+  Coaches.belongsToMany(Rosters, {through: 'roster_coaches', as: 'rosters', foreignKey: 'coach_id'});
+  Rosters.belongsToMany(Coaches, {through: 'roster_coaches', as: 'coaches', foreignKey: 'roster_id'});
+  Players.belongsTo(Persons, { as: 'person', foreignKey: 'person_id'});
+  Coaches.belongsTo(Persons, { as: 'person', foreignKey: 'person_id'});
+
+  // Admins/Users
+  LeagueAdmins.belongsTo(Users, { foreignKey: 'user_id', as: 'user'});
+  LeagueAdmins.belongsTo(Leagues, { foreignKey: 'league_id', as: 'league'});
+  LeagueScorekeepers.belongsTo(Users, { foreignKey: 'user_id', as: 'user'});
+  LeagueScorekeepers.belongsTo(Leagues, { foreignKey: 'league_id', as: 'league'});
+  Users.belongsToMany(Leagues, {through: 'user_leagues', as: 'leagues', foreignKey: 'user_id'});
+  Leagues.belongsToMany(Users, {through: 'user_leagues', as: 'users', foreignKey: 'league_id'});
 
   // Matches/Players
-  models['Players'].belongsToMany(models['PingPongMatches'], {through: 'ping_pong_match_players', as: 'matches', foreignKey: 'player_id'});
-  models['PingPongMatches'].belongsToMany(models['Players'], {through: 'ping_pong_match_players', as: 'players', foreignKey: 'match_id'});
+  Players.belongsToMany(PingPongMatches, {through: 'ping_pong_match_players', as: 'matches', foreignKey: 'player_id'});
+  PingPongMatches.belongsToMany(Players, {through: 'ping_pong_match_players', as: 'players', foreignKey: 'match_id'});
 
   // Matches/Sets/Games
-  models['PingPongMatches'].belongsToMany(models['PingPongGames'], {through: 'ping_pong_match_games', as: 'games', foreignKey: 'match_id'});
-  models['PingPongGames'].belongsToMany(models['PingPongMatches'], {through: 'ping_pong_match_games', as: 'match', foreignKey: 'game_id'});
+  PingPongMatches.belongsToMany(PingPongGames, {through: 'ping_pong_match_games', as: 'games', foreignKey: 'match_id'});
+  PingPongGames.belongsToMany(PingPongMatches, {through: 'ping_pong_match_games', as: 'match', foreignKey: 'game_id'});
 };

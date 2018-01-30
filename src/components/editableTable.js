@@ -1,6 +1,6 @@
 import { Component } from 'preact';
-import Toggle from './toggle';
-import Autocomplete from './autocomplete';
+import Autocomplete from './Autocomplete';
+import Toggle from './Toggle';
 
 export default class EditableTable extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import { Component } from 'preact';
 import Rest from '../lib/rest-service';
-import BoxScore from '../components/boxScore';
+import BoxScore from '../components/BoxScore';
 
 export default class MatchSummary extends Component {
   constructor(props) {

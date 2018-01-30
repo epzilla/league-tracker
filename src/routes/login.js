@@ -1,7 +1,7 @@
 import { Component } from 'preact';
-import Rest from '../lib/rest-service';
 import { Link } from 'preact-router/match';
 import LocalStorageService from '../lib/local-storage-service';
+import Rest from '../lib/rest-service';
 
 export default class Login extends Component {
   constructor(props) {

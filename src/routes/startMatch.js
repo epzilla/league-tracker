@@ -1,14 +1,14 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
+import { MATCH_STARTED } from '../lib/constants';
+import LocalStorageService from '../lib/local-storage-service';
 import Rest from '../lib/rest-service';
 import WebSocketService from '../lib/websocket-service';
-import LocalStorageService from '../lib/local-storage-service';
-import PlayerSelectBlock from '../components/playerSelectBlock';
-import SelectPlayerModal from '../components/selectPlayerModal';
-import Stepper from '../components/stepper';
-import SegmentedControl from '../components/segmentedControl';
-import Toggle from '../components/toggle';
-import { MATCH_STARTED } from '../lib/constants';
+import PlayerSelectBlock from '../components/PlayerSelectBlock';
+import SegmentedControl from '../components/SegmentedControl';
+import SelectPlayerModal from '../components/SelectPlayerModal';
+import Stepper from '../components/Stepper';
+import Toggle from '../components/Toggle';
 
 export default class StartMatch extends Component {
   constructor(props) {

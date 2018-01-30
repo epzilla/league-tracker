@@ -1,14 +1,14 @@
 import { Component } from 'preact';
 import { route } from 'preact-router';
-import { getTeamName, getScoreHeaderLine } from '../lib/helpers';
 import { SCORE_UPDATE, GAME_STARTED, GAME_FINISHED, MATCH_FINISHED } from '../lib/constants';
+import { getTeamName, getScoreHeaderLine } from '../lib/helpers';
+import LocalStorageService from '../lib/local-storage-service';
 import Rest from '../lib/rest-service';
 import WebSocketService from '../lib/websocket-service';
-import LocalStorageService from '../lib/local-storage-service';
-import Stepper from '../components/stepper';
-import Expandable from '../components/expandable';
-import Toggle from '../components/toggle';
-import GenericModal from '../components/genericModal';
+import Expandable from '../components/Expandable';
+import GenericModal from '../components/GenericModal';
+import Stepper from '../components/Stepper';
+import Toggle from '../components/Toggle';
 
 export default class UpdateScore extends Component {
   constructor(props) {

@@ -2,26 +2,29 @@ import { h, Component } from 'preact';
 import { route, Router } from 'preact-router';
 
 import Config from '../config';
-import Header from './header';
-import LeagueHome from '../routes/leagueHome';
-import Login from '../routes/login';
-import Logout from '../routes/logout';
-import Signup from '../routes/signUp';
-import Home from '../routes/home';
-import LeagueStats from '../routes/leagueStats';
-import TeamStats from '../routes/teamStats';
-import LeagueSchedule from '../routes/leagueSchedule';
-import TeamSchedule from '../routes/teamSchedule';
-import DebugConsole from './debugConsole';
-import NotSoSecretCode from './notSoSecretCode';
-import GlobalKeyboardShortcuts from './globalKeyboardShortcuts';
-import KeyboardShortcutHelp from './keyboardShortcutHelp';
-import FixedAlerts from './fixedAlerts';
-import Rest from '../lib/rest-service';
+
+import Home from '../routes/Home';
+import LeagueHome from '../routes/LeagueHome';
+import LeagueSchedule from '../routes/LeagueSchedule';
+import LeagueStats from '../routes/LeagueStats';
+import Login from '../routes/Login';
+import Logout from '../routes/Logout';
+import Signup from '../routes/SignUp';
+import TeamSchedule from '../routes/TeamSchedule';
+import TeamStats from '../routes/TeamStats';
+
+import DebugConsole from './DebugConsole';
+import FixedAlerts from './FixedAlerts';
+import GlobalKeyboardShortcuts from './GlobalKeyboardShortcuts';
+import Header from './Header';
+import KeyboardShortcutHelp from './KeyboardShortcutHelp';
+import NotSoSecretCode from './NotSoSecretCode';
+
+import * as Constants from '../lib/constants';
 import LocalStorageService from '../lib/local-storage-service';
+import Rest from '../lib/rest-service';
 import WebSocketService from '../lib/websocket-service';
 import { lightenOrDarken, generateGuid } from '../lib/helpers';
-import * as Constants from '../lib/constants';
 
 export default class App extends Component {
 	constructor(props) {

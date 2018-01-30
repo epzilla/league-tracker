@@ -1,13 +1,13 @@
 import { Component } from 'preact';
-import Rest from '../lib/rest-service';
 import { Link } from 'preact-router/match';
 import { NEW_MATCH_PERMISSION_GRANTED, MATCH_STARTED, MATCH_FINISHED } from '../lib/constants';
-import LeagueStandings from '../components/leagueStandings';
-import ScheduleList from '../components/scheduleList';
-import MatchList from '../components/matchList';
-import SegmentedControl from '../components/segmentedControl';
 import LocalStorageService from '../lib/local-storage-service';
+import Rest from '../lib/rest-service';
 import WebSocketService from '../lib/websocket-service';
+import LeagueStandings from '../components/LeagueStandings';
+import MatchList from '../components/MatchList';
+import ScheduleList from '../components/ScheduleList';
+import SegmentedControl from '../components/SegmentedControl';
 
 export default class LeagueHome extends Component {
   constructor(props) {
