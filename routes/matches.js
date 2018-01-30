@@ -116,7 +116,7 @@ exports.allForCompetition = (req, res) => {
 exports.live = (req, res) => {
   return getModelsFromReq(req).then(({ competition, sport, Model }) => {
     return Model.findAll({
-      where: { finished: 0, competitionId: competition.id },
+      where: { started: 1, finished: 0, competitionId: competition.id },
       order: [['startTime', 'ASC']],
       include: getMatchModelIncludes(sport)
     });
@@ -129,8 +129,8 @@ exports.recent = (req, res) => {
   return getModelsFromReq(req).then(({ competition, sport, Model }) => {
     return Model.findAll({
       where: { competitionId: competition.id, finished: 1 },
-      order: [['finishTime', 'DESC']],
-      limit: req.params.count !== null && req.params.count !== undefined ? req.params.count : 25,
+      order: [['startTime', 'DESC']],
+      limit: req.query.count !== null && req.query.count !== undefined ? req.query.count : 25,
       include: getMatchModelIncludes(sport)
     });
   }).then(matches => {
