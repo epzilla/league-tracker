@@ -33,6 +33,20 @@
     align-items: stretch;
     flex-grow: 1;
 
+    .separator {
+      display: block;
+      background: var(--tertiary);
+      color: var(--colorDefaultText);
+      min-height: 1px;
+      width: 100%;
+      order: 2;
+      padding: 0.25rem 1rem;
+
+      @media (min-width: 800px) {
+        display: none;
+      }
+    }
+
     > .nav-links > a,
     > .faux-link,
     > .linkify-children > a,

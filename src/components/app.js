@@ -191,6 +191,7 @@ export default class App extends Component {
           menu={this.state.menu}
           title={this.state.navTitle}
           user={this.state.user}
+          league={this.state.league}
           currentUrl={this.state.currentUrl}
 					menuToggledCallback={(e) => this.menuToggledCallback(e)}
 					showKeyboardShortcuts={() => this.showKeyboardShortcuts()}
