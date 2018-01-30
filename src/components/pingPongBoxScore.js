@@ -85,6 +85,23 @@ const PingPongBoxScore = ({ match, jumbotron, scoreFlash, gameFlash, matchFlash 
     classes += ' flash-final';
   }
 
+  if (!match.started && !match.finished) {
+    classes += ' future-match';
+    return (
+      <div class={classes}>
+        <div class="score-row flex">
+          <div class="flex-col">
+            <span class="player-name">{ getTeamName(match, 1) }</span>
+            <span class="player-name">{ getTeamName(match, 2) }</span>
+          </div>
+          <div class="flex-col flex-pull-right flex-center">
+            <h4 class="date-time-header">{ getFormattedMatchDate(match) }</h4>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   for (let i = 0; i < numCols; i++) {
     headerRowNums.push(i);
     let game = match.games[i];
@@ -146,7 +163,7 @@ const PingPongBoxScore = ({ match, jumbotron, scoreFlash, gameFlash, matchFlash 
             }
 
             return (
-              <span class={`score-number-box future`}>{i + 1}</span>
+              <span class={`score-number-box future-match`}>{i + 1}</span>
             )
           })
         }

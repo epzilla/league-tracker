@@ -37,11 +37,11 @@ export const lightenOrDarken = (col, amt) => {
     return (usePound?"#":"") + String("000000" + (green | (blue << 8) | (red << 16)).toString(16)).slice(-6);
 };
 
-export const getFormattedMatchDate = (game) => {
-  let date = parse(game.finishTime);
+export const getFormattedMatchDate = (match) => {
+  let date = match.finished ? parse(match.finishTime) : parse(match.startTime);
   let now = new Date();
 
-  if (differenceInDays(now, date) < 7) {
+  if (Math.abs(differenceInDays(now, date)) < 7) {
     return `${format(date, 'dddd')} at ${format(date, 'h:mm')}`;
   }
 
