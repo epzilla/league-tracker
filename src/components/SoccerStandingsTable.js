@@ -9,6 +9,7 @@ const SoccerStandingsTable = ({ standings }) => {
           <tr>
             <th></th>
             <th>Team</th>
+            <th></th>
             <th>W</th>
             <th>D</th>
             <th>L</th>
@@ -24,6 +25,9 @@ const SoccerStandingsTable = ({ standings }) => {
               return (
                 <tr>
                   <td>{t.standing}</td>
+                  <td class="standings-logo">
+                    <img height="40" src={`/assets/icons/logos/${t.team.id}.png`} />
+                  </td>
                   <td>{t.team.title}</td>
                   <td>{t.wins}</td>
                   <td>{t.draws}</td>

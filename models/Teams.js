@@ -63,12 +63,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true,
       defaultValue: undefined
     },
-    primaryLogo: {
-      field: 'primary_logo',
-      type: DataTypes.STRING,
-      allowNull: true,
-      defaultValue: undefined
-    },
     secondaryLogo: {
       field: 'secondary_logo',
       type: DataTypes.STRING,
