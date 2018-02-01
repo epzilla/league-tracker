@@ -6,7 +6,7 @@ import SoccerStandingsTable from './SoccerStandingsTable';
 export default class LeagueStandings extends Component {
   constructor(props) {
     super(props);
-    this.state = { divisionStandings: [] };
+    this.state = { competition: null, standings: [] };
   }
 
   componentWillReceiveProps({ standings }) {
@@ -15,11 +15,11 @@ export default class LeagueStandings extends Component {
       if (competitions && competitions.length > 0) {
         const current = competitions.find(c => !!c.current);
         if (current && current.divisionStandings && current.divisionStandings.length > 0) {
-          let standings = current.divisionStandings.map(s => {
+          current.divisionStandings = current.divisionStandings.map(s => {
             s.teamOrPlayerStandings.sort((a, b) => a.standing - b.standing);
             return s;
           });
-          this.setState({ divisionStandings: standings });
+          this.setState({ competition: current, standings: current.divisionStandings });
         }
       }
     }
@@ -34,19 +34,19 @@ export default class LeagueStandings extends Component {
   };
 
   render() {
-    const { divisionStandings } = this.state;
+    const { competition, standings } = this.state;
 
-    if (divisionStandings.length > 0) {
+    if (competition && competition.divisionStandings && competition.divisionStandings.length > 0) {
       return (
         <div class="league-standings">
           {
             this.props.sport ?
-            divisionStandings.map(standing => {
+            standings.map(s => {
               switch (this.props.sport.name) {
                 case 'Soccer':
-                  return <SoccerStandingsTable standings={standing} />;
+                  return <SoccerStandingsTable competition={competition} standings={s} />;
                 default:
-                  return <PingPongStandingsTable standings={standing} />;
+                  return <PingPongStandingsTable competition={competition} standings={s} />;
               }
             })
             : null

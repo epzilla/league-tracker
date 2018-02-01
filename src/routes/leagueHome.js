@@ -107,10 +107,10 @@ export default class LeagueHome extends Component {
         <section class={`league-home-col hide-large league-main ${this.state.tab === 1 ? 'show' : 'hide'}`}>
           { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} sport={league.sport} /> : null }
           { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} sport={league.sport} /> : null }
-          <ScheduleList league={league} upcoming={true} />
+          <ScheduleList league={league} upcoming={true} user={user} />
         </section>
         <section class="league-home-col league-right-sidebar">
-          <ScheduleList league={league} upcoming={true} />
+          <ScheduleList league={league} upcoming={true} user={user} />
         </section>
       </article>
     );

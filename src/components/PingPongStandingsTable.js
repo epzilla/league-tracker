@@ -1,4 +1,4 @@
-const PingPongStandingsTable = ({ standings }) => {
+const PingPongStandingsTable = ({ competition, standings }) => {
   return (
     <section class="division-standings">
       <h2 class="primary-text">{ standings.division.name } Standings</h2>

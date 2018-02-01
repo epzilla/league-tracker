@@ -82,3 +82,23 @@ export const generateGuid = () => {
       return v.toString(16);
   });
 };
+
+export const orderBy = (items, predicate) => {
+  if (typeof predicate === 'string') {
+    items.sort((a,b) => a[predicate] - b[predicate]);
+  } else {
+    items.sort((a,b) => predicate(a) - predicate(b));
+  }
+  return items;
+};
+
+export const groupBy = (items, predicate) => {
+  return items.reduce((obj, item) => {
+    if (typeof predicate === 'string') {
+      (obj[item[predicate]] = obj[item[predicate]] || []).push(item);
+    } else {
+      (obj[predicate(item)] = obj[predicate(item)] || []).push(item);
+    }
+    return obj;
+  }, {});
+};

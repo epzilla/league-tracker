@@ -99,15 +99,22 @@ exports.init = (models, db, sendMsg, registerForMsg) => {
 };
 
 exports.allForCompetition = (req, res) => {
-  return getModelsFromReq(req).then(({ competition, sport, Model }) => {
+  let reqCopy = Object.assign({}, req);
+  return Leagues.findOne({ where: { slug: req.params.leagueSlug }}).then(l => {
+    reqCopy.params.sportId = l.sportId;
+    return getModelsFromReq(reqCopy);
+  })
+  .then(({ competition, sport, Model }) => {
     return Model.findAll({
       where: { competitionId: competition.id },
       order: [['startTime', 'ASC']],
       include: getMatchModelIncludes(sport)
     });
   }).then(matches => {
+    console.log(matches.length);
     return res.json(matches || []);
   }).catch(e => {
+    console.error(e);
     return res.status(500).send(e);
   });
 };
