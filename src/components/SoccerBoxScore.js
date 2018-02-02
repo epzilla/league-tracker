@@ -46,10 +46,14 @@ const getClassesForScoreBox = (match, scoreFlash, teamNum) => {
   return classes;
 };
 
-const SoccerBoxScore = ({ match, jumbotron, scoreFlash, matchFlash }) => {
+const SoccerBoxScore = ({ match, jumbotron, scoreFlash, mini, matchFlash }) => {
   const stats = match.finished ? getStatsForMatch(match) : null;
   let footer;
-  let classes = 'scoreboard ';
+  let classes = 'scoreboard soccer ';
+  if (mini) {
+    classes += ' mini';
+  }
+
   if (!jumbotron) {
     classes += ' box-score';
   } else if (matchFlash) {

@@ -28,7 +28,7 @@ export default class ScheduleList extends Component {
             <h3 class="flex-1 flex-center">Schedule</h3>
             { league && <Link href={`/leagues/${league.slug}/schedule`} class="edit-link abs-right">View</Link> }
           </header>
-          { this.state.matches.length > 0 ? <MatchList upcoming matches={this.state.matches} sport={this.props.league.sport} /> : null }
+          { this.state.matches.length > 0 ? <MatchList mini upcoming matches={this.state.matches} sport={this.props.league.sport} /> : null }
         </div>
       </div>
     );

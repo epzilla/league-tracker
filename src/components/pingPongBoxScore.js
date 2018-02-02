@@ -72,13 +72,17 @@ const getClassesForScoreBox = (match, i, scoreFlash, teamNum) => {
   return classes;
 };
 
-const PingPongBoxScore = ({ match, jumbotron, scoreFlash, gameFlash, matchFlash }) => {
+const PingPongBoxScore = ({ match, jumbotron, scoreFlash, gameFlash, mini, matchFlash }) => {
   const stats = match.finished ? getStatsForMatch(match) : null;
   let headerRowNums = [];
   let footer;
   let numCols = match.finished ? match.games.length : match.bestOf;
   let currentGame;
-  let classes = 'scoreboard ';
+  let classes = 'scoreboard ping-pong ';
+  if (mini) {
+    classes += ' mini';
+  }
+
   if (!jumbotron) {
     classes += ' box-score';
   } else if (matchFlash) {

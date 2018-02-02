@@ -98,19 +98,19 @@ export default class LeagueHome extends Component {
           />
         </section>
         <section class="league-home-col league-left-sidebar">
-          { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} sport={league.sport} /> : null }
-          { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} sport={league.sport} /> : null }
+          { liveMatches && liveMatches.length > 0 ? <MatchList mini live matches={liveMatches} sport={league.sport} /> : null }
+          { recentMatches && recentMatches.length > 0 ? <MatchList mini recent matches={recentMatches} sport={league.sport} /> : null }
         </section>
         <section class={`league-home-col league-main ${this.state.tab === 0 ? 'show' : 'hide'}`}>
           <LeagueStandings league={league} standings={standings} sport={league && league.sport ? league.sport : null} />
         </section>
         <section class={`league-home-col hide-large league-main ${this.state.tab === 1 ? 'show' : 'hide'}`}>
-          { liveMatches && liveMatches.length > 0 ? <MatchList live matches={liveMatches} sport={league.sport} /> : null }
-          { recentMatches && recentMatches.length > 0 ? <MatchList recent matches={recentMatches} sport={league.sport} /> : null }
-          <ScheduleList league={league} upcoming={true} user={user} />
+          { liveMatches && liveMatches.length > 0 ? <MatchList mini live matches={liveMatches} sport={league.sport} /> : null }
+          { recentMatches && recentMatches.length > 0 ? <MatchList mini recent matches={recentMatches} sport={league.sport} /> : null }
+          <ScheduleList league={league} upcoming={true} sport={league ? league.sport : null}  user={user} />
         </section>
         <section class="league-home-col league-right-sidebar">
-          <ScheduleList league={league} upcoming={true} user={user} />
+          <ScheduleList league={league} upcoming={true} sport={league ? league.sport : null} user={user} />
         </section>
       </article>
     );
