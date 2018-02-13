@@ -23,6 +23,16 @@ exports.init = (models, db) => {
 const updatePingPongStandings = (req, res, league) => {
   return matches.getMatchesFromCompetition(league).then(matches => {
     let players = {};
+    matches.forEach(m => {
+      m.players.forEach(p => {
+        if (!players[p.id]) {
+          players[p.id] = {};
+        }
+      });
+      m.games.forEach(g => {
+        // Add total points, games, matches, etc.
+      });
+    });
     res.json(matches);
   }).catch(e => {
     console.log(e);
