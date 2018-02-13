@@ -76,6 +76,19 @@ const getModelsFromReq = (req) => {
   });
 };
 
+const getModelsFromLeague = (league) => {
+  const sportId = league.sportId;
+  let competition;
+  let sport;
+  let Model;
+  return getSportMatchModel(sportId).then(results => {
+    competition = league.competitions.find(c => !!c.current);
+    sport = results[0];
+    Model = results[1];
+    return { competition, sport, Model };
+  });
+};
+
 exports.init = (models, db, sendMsg, registerForMsg) => {
   Op = db.Op;
   sequelize = db;
@@ -98,6 +111,18 @@ exports.init = (models, db, sendMsg, registerForMsg) => {
   TennisMatches = models.TennisMatches;
 };
 
+exports.getMatchesFromCompetition = (league) => {
+  return getModelsFromLeague(league).then(({ competition, sport, Model }) => {
+    return Model.findAll({
+      where: { competitionId: competition.id },
+      order: [['startTime', 'ASC']],
+      include: getMatchModelIncludes(sport)
+    });
+  }).then(matches => {
+    return matches || [];
+  });
+};
+
 exports.allForCompetition = (req, res) => {
   let reqCopy = Object.assign({}, req);
   return Leagues.findOne({ where: { slug: req.params.leagueSlug }}).then(l => {
@@ -111,7 +136,6 @@ exports.allForCompetition = (req, res) => {
       include: getMatchModelIncludes(sport)
     });
   }).then(matches => {
-    console.log(matches.length);
     return res.json(matches || []);
   }).catch(e => {
     console.error(e);

@@ -36,6 +36,7 @@ module.exports = function (models, app, sequelize, sendSocketMsg, registerForMsg
   app.get('/api/matches/upcoming/:sportId/:leagueSlug', matches.upcoming);
   app.get('/api/matches/all/:leagueSlug', matches.allForCompetition);
   app.get('/api/standings/:leagueSlug', divisionStandings.getLeagueWithStandings);
+  app.put('/api/standings/:leagueSlug', divisionStandings.updateLeagueStandings);
   app.get('/api/leagues/:leagueSlug', leagues.get);
   app.get('/api/users/:userId', users.get);
   app.get('/api/users/:userId/leagues', users.getLeaguesForUser);

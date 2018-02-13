@@ -82,6 +82,12 @@ export default class LeagueHome extends Component {
     this.setState({ tab: e });
   };
 
+  updateStandings = () => {
+    Rest.put(`standings/${this.props.leagueSlug}`).then(standings => {
+      this.setState({ standings });
+    });
+  };
+
   render() {
     let { liveMatches, recentMatches, league, user, standings } = this.state;
     return (
@@ -111,6 +117,9 @@ export default class LeagueHome extends Component {
         </section>
         <section class="league-home-col league-right-sidebar">
           <ScheduleList league={league} upcoming={true} sport={league ? league.sport : null} user={user} />
+        </section>
+        <section>
+          <button onClick={() => this.updateStandings()}>Update Standings</button>
         </section>
       </article>
     );
