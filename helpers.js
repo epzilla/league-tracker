@@ -4,3 +4,7 @@ exports.generateGuid = () => {
       return v.toString(16);
   });
 };
+
+exports.flatten = (arr) => {
+  return arr.reduce(( acc, cur ) => acc.concat(cur), []);
+};
